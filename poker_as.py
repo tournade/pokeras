@@ -20,6 +20,7 @@ if __name__ == "__main__":
     while continuer:
         partie = Partie(joueurs)
         partie.jouer_partie()
+        partie.sauvegarde()
         refaire_partie = ""
         while not ("oui" in refaire_partie or "non" in refaire_partie):
             refaire_partie = input(

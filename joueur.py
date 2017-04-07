@@ -1,5 +1,5 @@
 from combinaison import Combinaison
-
+import yaml
 
 class Joueur:
     """Classe représentant un joueur.
@@ -29,25 +29,25 @@ class Joueur:
         Returns (Combinaison): La combinaison obtenue
 
         """
-        combinaison = Combinaison()
-        termine = False
+        self.combinaison = Combinaison()
+        self.termine = False
 
-        while combinaison.nb_lancers < limite_lancers and not termine:
+        while self.combinaison.nb_lancers < limite_lancers and not self.termine:
             print("Voici votre combinaison:")
-            print(str(combinaison))
+            print(str(self.combinaison))
             relance = input("Quel(s) dé(s) voulez-vous rejouer (0 pour aucun), entrez la liste (ex. 1,5): ").strip()
 
             if relance == "0":
-                termine = True
+                self.termine = True
             else:
                 des_a_relancer = []
                 for de in relance.split(","):
                     des_a_relancer.append(int(de)-1)
-                combinaison.relancer_des(des_a_relancer)
-
+                self.combinaison.relancer_des(des_a_relancer)
+        self.termine = True
         print("Voici votre combinaison:")
-        print(str(combinaison))
-        return combinaison, combinaison.nb_lancers
+        print(str(self.combinaison))
+        return self.combinaison, self.combinaison.nb_lancers
 
     def __str__(self):
         """

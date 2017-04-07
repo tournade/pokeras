@@ -1,3 +1,5 @@
+import yaml
+
 from joueur import Joueur
 from combinaison import Combinaison
 from random import shuffle
@@ -24,26 +26,26 @@ class Partie:
         Le compteur de victoires est incrémenté pour le joueur gagnant (si la partie n'est pas nulle).
         Le joueur gagnant est affiché à l'écran (ou un message indiquant que la partie est nulle, s'il y a lieu).
         """
-        ordre = self._determiner_ordre()
+        self.ordre = self._determiner_ordre()
         print("\n\nL'ordre est tiré au hasard.")
-        for i in range(0, len(ordre)):
-            joueur = self.joueurs[ordre[i]]
+        for i in range(0, len(self.ordre)):
+            joueur = self.joueurs[self.ordre[i]]
             print("Le joueur {} est {}".format(i+1, joueur))
 
         print()
 
-        max_lancers = 3
+        self.max_lancers = 3
         resultats = []
 
-        for i in range(0, len(ordre)):
-            index = ordre[i]
+        for i in range(0, len(self.ordre)):
+            index = self.ordre[i]
             joueur = self.joueurs[index]
             joueur.nb_parties_jouees += 1
 
             print("C'est au tour de {}\n".format(joueur))
-            resultat, nb_tours = joueur.jouer_tour(max_lancers)
+            resultat, self.nb_tours = joueur.jouer_tour(self.max_lancers)
             if i == 0:
-                max_lancers = nb_tours
+                self.max_lancers = self.nb_tours
 
             print("{} a eu {}\n\n".format(joueur, resultat.determiner_type_combinaison()))
 
@@ -67,6 +69,37 @@ class Partie:
         ordre = list(range(0, len(self.joueurs)))
         shuffle(ordre)
         return ordre
+    def sauvegarde(self):
+        save = {}
+        etat =0
+        save["joueur"] = {}
+        for joueur in self.joueurs:
+            save["joueur"][joueur.nom] = {}
+            save["joueur"][joueur.nom]['emplacement'] = etat
+            save["joueur"][joueur.nom]["parti_jouer"] = joueur.nb_parties_jouees
+            save["joueur"][joueur.nom]["nombre_victoire"] = joueur.nb_victoires
+            save["joueur"][joueur.nom]["combinaison"] = str(joueur.combinaison.des)
+            save["joueur"][joueur.nom]["fin_tour"] = joueur.termine
+            save["joueur"][joueur.nom]["nombre de lancer"] = joueur.combinaison.nb_lancers
+            etat += 1
+        save["partie"] = {}
+        save["partie"]["ordre"] = self.ordre
+        save["partie"]["limite"] = self.max_lancers
+        with open('save.yml', 'w') as yaml_file:
+            yaml.dump(save, yaml_file, default_flow_style=False)
+        #print(yaml.dump(save, default_flow_style=False ))
+    def restaure(self):
+        with open("save.yml", 'r') as ymlfile:
+            cfg = yaml.load(ymlfile)
+        print(cfg)
+        joueurs_restaure = []
+        for joueur in cfg['joueur']:
+
+            if len(joueurs_restaure) < cfg['joueur'][joueur]['emplacement']:
+                joueurs_restaure.insert(cfg['joueur'][joueur]['emplacement'], Joueur(joueur))
+            else:
+                joueurs_restaure.append(Joueur(joueur))
+        print(joueurs_restaure[0].nom)
 
 
 if __name__ == "__main__":
@@ -80,3 +113,5 @@ if __name__ == "__main__":
     assert 0 in ordre
     assert 1 in ordre
     assert 2 in ordre
+
+    partie.restaure()
