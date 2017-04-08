@@ -13,7 +13,7 @@ class Combinaison:
     types_cartes = [
         Carte.AS, Carte.ROI, Carte.DAME, Carte.VALET, Carte.DIX, Carte.NEUF
     ]
-
+    index_a_relancer = []
     def __init__(self, des = None):
         """Initialise une combinaison"""
         self.nb_lancers = 1
@@ -21,11 +21,9 @@ class Combinaison:
             self.des = self._lancer_des(5)
         else:
             self.des = des
-
-            if type(self.des[0]) == int:
-                self.des = []
-                for i in des:
-                    self.des.append(self.types_cartes[i])
+    def ajouter_des_a_index(self,numero,index_a_relancer):
+       index_a_relancer.append(numero)
+       return index_a_relancer
 
     def relancer_des(self, index_a_relancer):
         """Relance les dés spécifiés
