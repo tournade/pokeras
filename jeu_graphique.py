@@ -25,7 +25,7 @@ def partie_graphique():
     #fenetre.mainloop()
 def charger_partie():
         try:
-            Partie.restaure()
+            Partie.restaure(Partie)
         except:
             messagebox.showerror("Erreur chargement","Le fichier de sauvegarde n'est pas disponible")
 def lire_regles():
@@ -35,7 +35,7 @@ def lire_regles():
     "La séquence avec toutes les figures suivis l'une de l'autre, le double carré avec deux paires de figures "
     "et le carré avec une paire de figures. Chacun des joueurs à le droit 3 lancers sauf si le joueur précédent a"
     "a réussi en moins de coups, donc le nombre de coups réussis est le nouveau total")
-root = Toplevel()
+root = Tk()
 nom_joueur1 = Entry(root,textvariable=nom1).grid(row=2,column=3)
 joueur1= Label(root,text="Joueur 1").grid(row=1,column=3)
 nom_joueur2 = Entry(root,textvariable=nom2).grid(row=2,column=4)
