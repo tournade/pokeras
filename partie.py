@@ -108,7 +108,6 @@ class Partie:
 
 
 
-
 if __name__ == "__main__":
     joueurs = [Joueur("a"), Joueur("b"), Joueur("c")]
 
