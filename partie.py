@@ -69,6 +69,7 @@ class Partie:
         ordre = list(range(0, len(self.joueurs)))
         shuffle(ordre)
         return ordre
+
     def sauvegarde(self):
         save = {}
         etat =0
@@ -88,18 +89,19 @@ class Partie:
         with open('save.yml', 'w') as yaml_file:
             yaml.dump(save, yaml_file, default_flow_style=False)
         #print(yaml.dump(save, default_flow_style=False ))
+
     def restaure(self):
         with open("save.yml", 'r') as ymlfile:
             cfg = yaml.load(ymlfile)
         print(cfg)
         joueurs_restaure = []
         for joueur in cfg['joueur']:
+            joueurs_restaure.append(joueur)
 
-            if len(joueurs_restaure) < cfg['joueur'][joueur]['emplacement']:
-                joueurs_restaure.insert(cfg['joueur'][joueur]['emplacement'], Joueur(joueur))
-            else:
-                joueurs_restaure.append(Joueur(joueur))
-        print(joueurs_restaure[0].nom)
+        for joueur in cfg['joueur']:
+            joueurs_restaure[cfg['joueur'][joueur]['emplacement']] = Joueur(joueur)
+
+
 
 
 if __name__ == "__main__":
