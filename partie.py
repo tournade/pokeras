@@ -100,6 +100,11 @@ class Partie:
 
         for joueur in cfg['joueur']:
             joueurs_restaure[cfg['joueur'][joueur]['emplacement']] = Joueur(joueur)
+            joueurs_restaure[cfg['joueur'][joueur]['emplacement']].nb_parties_jouees = cfg['joueur'][joueur]['nombre_victoire']
+            joueurs_restaure[cfg['joueur'][joueur]['emplacement']].nb_victoires = cfg['joueur'][joueur]['parti_jouer']
+            joueurs_restaure[cfg['joueur'][joueur]['emplacement']].terminer = cfg['joueur'][joueur]['fin_tour']
+            joueurs_restaure[cfg['joueur'][joueur]['emplacement']].nb_lancers = cfg['joueur'][joueur]['nombre de lancer']
+            joueurs_restaure[cfg['joueur'][joueur]['emplacement']].restaure_combinaison(cfg['joueur'][joueur]['combinaison'])
 
 
 

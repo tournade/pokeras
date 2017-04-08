@@ -7,8 +7,8 @@ nom2 =''
 nom3 =''
 def partie_graphique():
     pass
-    Partie.joueurs.append(nom_joueur1.get(),nom_joueur2.get(),nom_joueur3.get())
-    Partie.jouer_partie(Partie)
+    #Partie.joueurs.append(nom_joueur1.get(),nom_joueur2.get(),nom_joueur3.get())
+    #Partie.jouer_partie(Partie)
     fenetre = Toplevel()
     joueur=Label(fenetre,text="Test").grid(row=1,column=1)
     lancer_des = Button(fenetre,text="Lancer dés",command=Combinaison._lancer_des(Combinaison,5))

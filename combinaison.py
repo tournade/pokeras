@@ -22,6 +22,11 @@ class Combinaison:
         else:
             self.des = des
 
+            if type(self.des[0]) == int:
+                self.des = []
+                for i in des:
+                    self.des.append(self.types_cartes[i])
+
     def relancer_des(self, index_a_relancer):
         """Relance les dés spécifiés
         Args:

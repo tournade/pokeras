@@ -19,6 +19,8 @@ class Joueur:
         self.nom = nom
         self.nb_victoires = 0
         self.nb_parties_jouees = 0
+        self.restore = False
+        self.termine = False
 
     def jouer_tour(self, limite_lancers):
         """
@@ -29,26 +31,41 @@ class Joueur:
         Returns (Combinaison): La combinaison obtenue
 
         """
-        self.combinaison = Combinaison()
-        self.termine = False
+        if self.termine == True:
+            pass
+        elif self.restore == True:
+            pass
+        else:
+            self.combinaison = Combinaison()
 
-        while self.combinaison.nb_lancers < limite_lancers and not self.termine:
+
+            while self.combinaison.nb_lancers < limite_lancers and not self.termine:
+                print("Voici votre combinaison:")
+                print(str(self.combinaison))
+                relance = input("Quel(s) dé(s) voulez-vous rejouer (0 pour aucun), entrez la liste (ex. 1,5): ").strip()
+
+                if relance == "0":
+                    self.termine = True
+                else:
+                    des_a_relancer = []
+                    for de in relance.split(","):
+                        des_a_relancer.append(int(de)-1)
+                    self.combinaison.relancer_des(des_a_relancer)
+            self.termine = True
             print("Voici votre combinaison:")
             print(str(self.combinaison))
-            relance = input("Quel(s) dé(s) voulez-vous rejouer (0 pour aucun), entrez la liste (ex. 1,5): ").strip()
+            return self.combinaison, self.combinaison.nb_lancers
 
-            if relance == "0":
-                self.termine = True
-            else:
-                des_a_relancer = []
-                for de in relance.split(","):
-                    des_a_relancer.append(int(de)-1)
-                self.combinaison.relancer_des(des_a_relancer)
-        self.termine = True
-        print("Voici votre combinaison:")
-        print(str(self.combinaison))
-        return self.combinaison, self.combinaison.nb_lancers
-
+    def restaure_combinaison(self, combinaison):
+        enlever =['>','<','[',']',' ','Carte.','NEUF','DIX','VALET','DAME','ROI','AS',':']
+        de = []
+        for t in enlever:
+            combinaison = combinaison.replace(t,'')
+        de_string = combinaison.split(',')
+        for i in de_string:
+            de.append(int(i))
+        self.combinaison = Combinaison(de)
+        print(self.combinaison.des)
     def __str__(self):
         """
         Converti le joueur en une chaîne de caractères le représentant (le nom du joueur).
