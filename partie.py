@@ -93,7 +93,7 @@ class Partie:
     def restaure(self):
         with open("save.yml", 'r') as ymlfile:
             cfg = yaml.load(ymlfile)
-        print(cfg)
+        print(cfg['partie'])
         joueurs_restaure = []
         for joueur in cfg['joueur']:
             joueurs_restaure.append(joueur)
@@ -105,7 +105,8 @@ class Partie:
             joueurs_restaure[cfg['joueur'][joueur]['emplacement']].terminer = cfg['joueur'][joueur]['fin_tour']
             joueurs_restaure[cfg['joueur'][joueur]['emplacement']].nb_lancers = cfg['joueur'][joueur]['nombre de lancer']
             joueurs_restaure[cfg['joueur'][joueur]['emplacement']].restaure_combinaison(cfg['joueur'][joueur]['combinaison'])
-
+            self.ordre = cfg["partie"]["ordre"]
+            self.max_lancers = cfg["partie"]["limite"]
 
 
 if __name__ == "__main__":

@@ -65,7 +65,7 @@ class Joueur:
         for i in de_string:
             de.append(int(i))
         self.combinaison = Combinaison(de)
-        print(self.combinaison.des)
+
     def __str__(self):
         """
         Converti le joueur en une chaîne de caractères le représentant (le nom du joueur).
