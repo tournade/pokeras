@@ -21,9 +21,22 @@ class Combinaison:
             self.des = self._lancer_des(5)
         else:
             self.des = des
+
+            if type(self.des[0]) == int:
+                self.des = []
+                for i in des:
+                    self.des.append(self.types_cartes[i])
+
+
     def ajouter_des_a_index(self,numero,index_a_relancer):
        index_a_relancer.append(numero)
        return index_a_relancer
+    def retourne_combinaison(self):
+        chaine = ""
+        for elem in self.des:
+            chaine += "{:^3s}".format(elem)
+        return chaine
+
 
     def relancer_des(self, index_a_relancer):
         """Relance les dés spécifiés

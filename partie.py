@@ -25,15 +25,14 @@ class Partie:
         for i in range(0, len(self.ordre)):
             index = self.ordre[i]
             joueur = self.joueurs[index]
-            self.interface.joueur_interface[index][0].config(text=joueur.nom)
-            des = ''
-            for i in joueur.combinaison.des:
-                des += " " + str(i)
-            label = "combinaison: test" + des + "\nLancer_restant:\nresultat:\npourcentage de parti gagnee:\nparti jouer:"
-            print(self.interface.joueur_interface[index][1])
-            self.interface.joueur_interface[index][1].config(text=label)
+            self.update_interface_joueur(index,joueur)
             if joueur.termine == True:
                 pass
+
+    def update_interface_joueur(self,index,joueur):
+        self.interface.joueur_interface[index][0].config(text=joueur.nom)
+        label = "combinaison: " + joueur.combinaison.retourne_combinaison() + "\nLancer_restant: " + str(joueur.nb_lancers) + "\nresultat: \npourcentage de parti gagnee:\nparti jouer: " + str(joueur.nb_parties_jouees)
+        self.interface.joueur_interface[index][1].config(text=label)
 
     def jouer_partie(self):
         """ Joue une partie entre tous les joueurs et détermine le gagnant.
