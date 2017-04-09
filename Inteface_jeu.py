@@ -1,111 +1,96 @@
-from tkinter import Tk, Label, Button, Checkbutton, Entry, messagebox, Toplevel, LabelFrame, Frame, GROOVE
+from tkinter import Tk,Label,Button,Checkbutton,Entry,messagebox,Toplevel
 from joueur import Joueur
 from partie import Partie
 from combinaison import Combinaison
 
-nom1 = ''
-nom2 = ''
-nom3 = ''
-
+nom1 =''
+nom2 =''
+nom3 =''
 
 class mon_interface(Tk):
+
     def __init__(self):
         super().__init__()
-
-        self.frame_player1 = LabelFrame(self, text="Player 1", padx=20, pady=20)
-        self.frame_player1.grid(row=1, column=1)
-
-        self.player1 = Label(self.frame_player1, text="combinaison:\nLancer_restant:\nresultat:\npourcentage de parti gagnee:\nparti jouer:", justify="left")
-        self.player1.grid()
-
-
-        self.frame_player2 = LabelFrame(self, text="Player 2", padx=20, pady=20)
-        self.frame_player2.grid(row=2, column=1)
-
-        self.player2 = Label(self.frame_player2, text="combinaison:\nLancer_restant:\nresultat:\npourcentage de parti gagnee:\nparti jouer:", justify="left")
-        self.player2.grid()
-        self.frame_player3 = LabelFrame(self, text="Player 2", padx=20, pady=20)
-        self.frame_player3.grid(row=3, column=1)
-
-        self.player3 = Label(self.frame_player3, text="combinaison:\nLancer_restant:\nresultat:\npourcentage de parti gagnee:\nparti jouer:", justify="left")
-        self.player3.grid()
-
-        frame1 = Frame(self, borderwidth=2, relief=GROOVE).grid(row=2,column=2)
-        self.joueur_interface = [(self.frame_player1,self.player1),(self.frame_player2,self.player2),(self.frame_player3,self.player3)]
-        relancer_des = Button(self, text="Lancer dés", command=Combinaison.relancer_des(Combinaison, Combinaison.index_a_relancer)).grid(row=3,column=2,columnspan=3)
-        terminer_tour = Button(self, text="Terminer").grid(row=4, column=2,columnspan=3)
-        sauvegarde = Button(self, text="Sauvegarde", command=Partie.sauvegarde).grid(row=3, column=6, columnspan=4)
-
-        self.de_1 = Button(frame1, text="0", command=Combinaison.ajouter_des_a_index(Combinaison, 1, Combinaison.index_a_relancer),padx=5,pady=5).grid(row=2,column=3)
-        self.de_2 = Button(frame1, text="1", command=Combinaison.ajouter_des_a_index(Combinaison, 2, Combinaison.index_a_relancer),padx=5,pady=5).grid(row=2,column=4)
-        self.de_3 = Button(frame1, text="2",command=Combinaison.ajouter_des_a_index(Combinaison, 3, Combinaison.index_a_relancer),padx=5,pady=5).grid(row=2,column=5)
-        self.de_4 = Button(frame1, text="3",command=Combinaison.ajouter_des_a_index(Combinaison, 4, Combinaison.index_a_relancer),padx=5,pady=5).grid(row=2,column=6)
-        self.de_5 = Button(frame1, text="4",command=Combinaison.ajouter_des_a_index(Combinaison, 5, Combinaison.index_a_relancer),padx=5,pady=5).grid(row=2,column=7)
-        reset = Button(self, text="Nouvelle Partie").grid(row=4, column=6,columnspan=4)
+        Label(self, textvariable=Joueur.nom).grid(row=1, column=1)
+        nb_tours_restant = Label(self, textvariable=Partie.nb_tours_restants).grid(row=1, column=8)
+        relancer_des = Button(self, text="Lancer dés",
+                              command=Combinaison.relancer_des(Combinaison, Combinaison.index_a_relancer)).grid(row=4,
+                                                                                                                column=6)
+        terminer_tour = Button(self, text="Terminer").grid(row=4, column=7)
+        sauvegarde = Button(self, text="Sauvegarde", command=Partie.sauvegarde).grid(row=9, column=3)
+        # textvariable=Combinaison.des[0]
+        de_1 = Button(self, textvariable=Combinaison.des[0],
+                      command=Combinaison.ajouter_des_a_index(Combinaison, 1, Combinaison.index_a_relancer)).grid(row=2,
+                                                                                                                  column=1)
+        de_2 = Button(self, textvariable=Combinaison.des[1],
+                      command=Combinaison.ajouter_des_a_index(Combinaison, 2, Combinaison.index_a_relancer)).grid(row=2,
+                                                                                                                  column=2)
+        de_3 = Button(self, textvariable=Combinaison.des[2],
+                      command=Combinaison.ajouter_des_a_index(Combinaison, 3, Combinaison.index_a_relancer)).grid(row=2,
+                                                                                                                  column=3)
+        de_4 = Button(self, textvariable=Combinaison.des[3],
+                      command=Combinaison.ajouter_des_a_index(Combinaison, 4, Combinaison.index_a_relancer)).grid(row=2,
+                                                                                                                  column=4)
+        de_5 = Button(self, textvariable=Combinaison.des[4],
+                      command=Combinaison.ajouter_des_a_index(Combinaison, 5, Combinaison.index_a_relancer)).grid(row=2,
+                                                                                                                  column=5)
+        reset = Button(self, text="Nouvelle Partie").grid(row=4, column=8)
         self.menu = menu(self)
 
     def nouvelle_partie(self):
         pass
-        # fenetre.destroy()
+    #fenetre.destroy()
 
 
 class menu(Toplevel):
-    def __init__(self, master):
+
+
+    def __init__(self,master):
+
         super().__init__(master)
 
         self.master = master
         self.transient(master)
         self.grab_set()
 
-        nom_joueur1 = Entry(self, textvariable=nom1).grid(row=2, column=3)
-        joueur1 = Label(self, text="Joueur 1").grid(row=1, column=3)
-        nom_joueur2 = Entry(self, textvariable=nom2).grid(row=2, column=4)
-        joueur2 = Label(self, text="Joueur 2").grid(row=1, column=4)
-        nom_joueur3 = Entry(self, textvariable=nom3).grid(row=2, column=5)
-        joueur3 = Label(self, text="Joueur 3").grid(row=1, column=5)
+        nom_joueur1 = Entry(self,textvariable=nom1).grid(row=2,column=3)
+        joueur1= Label(self,text="Joueur 1").grid(row=1,column=3)
+        nom_joueur2 = Entry(self,textvariable=nom2).grid(row=2,column=4)
+        joueur2= Label(self,text="Joueur 2").grid(row=1,column=4)
+        nom_joueur3 = Entry(self,textvariable=nom3).grid(row=2,column=5)
+        joueur3= Label(self,text="Joueur 3").grid(row=1,column=5)
         joker_d_as = False
-        Checkbutton(self, text="As en tant que joker", variable=joker_d_as).grid(row=4, column=5)
-        commencer_partie = Button(self, text="Commencer", command=self.nouvelle_parti).grid(row=4, column=2)
-        regles = Button(self, text="Lire règles", command=self.lire_regles).grid(row=4, column=3)
-        quitter = Button(self, text="Quitter", command=self.quit).grid(row=5, column=3)
-        restaurer = Button(self, text="Restaurer", command=self.charger_partie).grid(row=5, column=2)
+        Checkbutton(self,text="As en tant que joker",variable = joker_d_as).grid(row=4,column=5)
+        commencer_partie = Button(self,text="Commencer",command = self.nouvelle_parti).grid(row=4,column=2)
+        regles = Button(self,text="Lire règles",command=self.lire_regles).grid(row=4,column=3)
+        quitter = Button(self,text="Quitter",command=self.quit).grid(row=5,column=3)
+        restaurer = Button(self,text="Restaurer",command=self.charger_partie).grid(row=5,column=2)
 
     def nouvelle_parti(self):
         """Affecte l'attribut "valeur" à la valeur choisie, et fermer la fenêtre.
-
         """
         # TODO: Lorsque nous connaîtrons la gestion des erreurs,
         # TODO: nous pourrions valider le contenu de l'entrée
         # TODO: avant de fermer.
-
+        Partie.jouer_partie(Partie)
         # On sauvegarde le résultat.
 
         # On redonne le contrôle au parent.
         self.grab_release()
         self.master.focus_set()
         self.destroy()
-
     def lire_regles(self):
-        messagebox.showinfo("Règles du jeu", "Le but du jeu est d'obtenir la combinaison ayant la plus grande valeur."
-                                             "La combinaison valant le plus est le Quinton, soit lui avec 5 figures similaires, le carré avec 4 figures similaires."
-                                             "Le full avec 3 figures similaires et suivis de 2 autre figures similaire,le brelan avec 3 figures similaires."
-                                             "La séquence avec toutes les figures suivis l'une de l'autre, le double carré avec deux paires de figures "
-                                             "et le carré avec une paire de figures. Chacun des joueurs à le droit 3 lancers sauf si le joueur précédent a"
-                                             "a réussi en moins de coups, donc le nombre de coups réussis est le nouveau total")
-
+        messagebox.showinfo("Règles du jeu","Le but du jeu est d'obtenir la combinaison ayant la plus grande valeur."
+        "La combinaison valant le plus est le Quinton, soit lui avec 5 figures similaires, le carré avec 4 figures similaires."
+        "Le full avec 3 figures similaires et suivis de 2 autre figures similaire,le brelan avec 3 figures similaires."
+        "La séquence avec toutes les figures suivis l'une de l'autre, le double carré avec deux paires de figures "
+        "et le carré avec une paire de figures. Chacun des joueurs à le droit 3 lancers sauf si le joueur précédent a"
+        "a réussi en moins de coups, donc le nombre de coups réussis est le nouveau total")
     def charger_partie(self):
-        # try:
-        partie = Partie("test", self.master)
-        partie.restaure()
-
-        self.grab_release()
-        self.master.focus_set()
-        self.destroy()
-        partie.restaure_partie()
-        # except:
-        #   messagebox.showerror("Erreur chargement","Le fichier de sauvegarde n'est pas disponible")
-
-
+        try:
+            Partie.restaure(Partie)
+        except:
+            messagebox.showerror("Erreur chargement","Le fichier de sauvegarde n'est pas disponible")
 if __name__ == '__main__':
     # Instanciation de la fenêtre et démarrage de sa boucle principale.
     fenetre = mon_interface()
