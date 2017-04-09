@@ -3,7 +3,7 @@ import yaml
 from joueur import Joueur
 from combinaison import Combinaison
 from random import shuffle
-
+from enums import Carte
 
 class Partie:
     """Représente une partie du jeu de Poker d'As
@@ -12,13 +12,28 @@ class Partie:
         joueurs (list): La liste des joueurs.
     """
 
-    def __init__(self, joueurs):
+    def __init__(self, joueurs, interface):
         """Initialise une partie avec la liste de joueurs
 
         Args:
             joueurs (list): La liste des joueurs.
         """
         self.joueurs = joueurs
+        self.interface = interface
+
+    def restaure_partie(self):
+        for i in range(0, len(self.ordre)):
+            index = self.ordre[i]
+            joueur = self.joueurs[index]
+            self.interface.joueur_interface[index][0].config(text=joueur.nom)
+            des = ''
+            for i in joueur.combinaison.des:
+                des += " " + str(i)
+            label = "combinaison: test" + des + "\nLancer_restant:\nresultat:\npourcentage de parti gagnee:\nparti jouer:"
+            print(self.interface.joueur_interface[index][1])
+            self.interface.joueur_interface[index][1].config(text=label)
+            if joueur.termine == True:
+                pass
 
     def jouer_partie(self):
         """ Joue une partie entre tous les joueurs et détermine le gagnant.
@@ -93,7 +108,6 @@ class Partie:
     def restaure(self):
         with open("save.yml", 'r') as ymlfile:
             cfg = yaml.load(ymlfile)
-        print(cfg['partie'])
         joueurs_restaure = []
         for joueur in cfg['joueur']:
             joueurs_restaure.append(joueur)
@@ -102,11 +116,12 @@ class Partie:
             joueurs_restaure[cfg['joueur'][joueur]['emplacement']] = Joueur(joueur)
             joueurs_restaure[cfg['joueur'][joueur]['emplacement']].nb_parties_jouees = cfg['joueur'][joueur]['nombre_victoire']
             joueurs_restaure[cfg['joueur'][joueur]['emplacement']].nb_victoires = cfg['joueur'][joueur]['parti_jouer']
-            joueurs_restaure[cfg['joueur'][joueur]['emplacement']].terminer = cfg['joueur'][joueur]['fin_tour']
+            joueurs_restaure[cfg['joueur'][joueur]['emplacement']].termine = cfg['joueur'][joueur]['fin_tour']
             joueurs_restaure[cfg['joueur'][joueur]['emplacement']].nb_lancers = cfg['joueur'][joueur]['nombre de lancer']
             joueurs_restaure[cfg['joueur'][joueur]['emplacement']].restaure_combinaison(cfg['joueur'][joueur]['combinaison'])
             self.ordre = cfg["partie"]["ordre"]
             self.max_lancers = cfg["partie"]["limite"]
+        self.joueurs = joueurs_restaure
 
 
 if __name__ == "__main__":
