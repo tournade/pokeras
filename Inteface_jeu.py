@@ -10,7 +10,7 @@ nom3 =''
 class mon_interface(Tk):
      def __init__(self):
          super().__init__()
-
+         self.relance_de = []
          self.frame_player1 = LabelFrame(self, text="Player 1", padx=20, pady=20)
          self.frame_player1.grid(row=1, column=1)
          self.player1 = Label(self.frame_player1,
@@ -34,16 +34,17 @@ class mon_interface(Tk):
          self.joueur_interface = [(self.frame_player1, self.player1), (self.frame_player2, self.player2),(self.frame_player3, self.player3)]
 
          frame1 = Frame(self, borderwidth=2, relief=GROOVE).grid(row=2, column=2)
-         self.de_1 = Button(frame1, text="0", command=Combinaison.ajouter_des_a_index(Combinaison, 1, Combinaison.index_a_relancer),padx=5, pady=5)
+         self.de_1 = Button(frame1, text="0", command= lambda: self.buttom_action(0) ,padx=5, pady=5)
          self.de_1.grid(row=2, column=3)
-         self.de_2 = Button(frame1, text="1", command=Combinaison.ajouter_des_a_index(Combinaison, 2, Combinaison.index_a_relancer),padx=5, pady=5)
+         self.de_2 = Button(frame1, text="1", command= lambda: self.buttom_action(1),padx=5, pady=5)
          self.de_2.grid(row=2, column=4)
-         self.de_3 = Button(frame1, text="2", command=Combinaison.ajouter_des_a_index(Combinaison, 3, Combinaison.index_a_relancer),padx=5, pady=5)
+         self.de_3 = Button(frame1, text="2", command= lambda: self.buttom_action(2),padx=5, pady=5)
          self.de_3.grid(row=2, column=5)
-         self.de_4 = Button(frame1, text="3", command=Combinaison.ajouter_des_a_index(Combinaison, 4, Combinaison.index_a_relancer),padx=5, pady=5)
+         self.de_4 = Button(frame1, text="3", command= lambda: self.buttom_action(3),padx=5, pady=5)
          self.de_4.grid(row=2, column=6)
-         self.de_5 = Button(frame1, text="4", command=Combinaison.ajouter_des_a_index(Combinaison, 5, Combinaison.index_a_relancer),padx=5, pady=5)
+         self.de_5 = Button(frame1, text="4", command= lambda: self.buttom_action(4),padx=5, pady=5)
          self.de_5.grid(row=2, column=7)
+         self.de_buttom = [self.de_1,self.de_2,self.de_3,self.de_4,self.de_5]
          reset = Button(self, text="Nouvelle Partie").grid(row=4, column=6, columnspan=4)
          relancer_des = Button(self, text="Lancer dés").grid(row=3, column=2, columnspan=3)
          terminer_tour = Button(self, text="Terminer").grid(row=4, column=2, columnspan=3)
@@ -53,6 +54,13 @@ class mon_interface(Tk):
 
      def nouvelle_partie(self):
          pass
+     def buttom_action(self,index):
+         if index in self.relance_de:
+            self.de_buttom[index].config(text=index)
+            self.relance_de.remove(index)
+         else:
+            self.de_buttom[index].config(text="")
+            self.relance_de.append(index)
 
 class menu(Toplevel):
 
