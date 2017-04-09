@@ -1,10 +1,10 @@
+
 from enums import Carte, TypeCombinaison
 from random import choice, shuffle
 
 
 class Combinaison:
     """Représente la combinaison d'un joueur
-
     Attributes:
         des (list): Liste des dés lancés.
         nb_lancers (int): Le nombre de lancés réalisés.
@@ -31,10 +31,11 @@ class Combinaison:
     def ajouter_des_a_index(self,numero,index_a_relancer):
        index_a_relancer.append(numero)
        return index_a_relancer
+
     def retourne_combinaison(self):
-        chaine = ""
+        chaine = []
         for elem in self.des:
-            chaine += "{:^3s}".format(elem)
+            chaine.append(str(elem))
         return chaine
 
 
@@ -52,7 +53,6 @@ class Combinaison:
 
     def determiner_type_combinaison(self):
         """Détermine le type de la combinaison.
-
         Return (TypeCombinaison): Le type de la combinaison.
         """
         valeurs = []
@@ -107,12 +107,10 @@ class Combinaison:
         Méthode statique qui détermine la meilleure combinaison (et donc le meilleur joueur) parmi une liste.
         Args:
             combinaisons (list): Liste de combinaisons sous forme de liste de tuples (Joueur, Combinaison)
-
         Returns (tuple): Un tuple (Joueur, Combinaison) du meilleur joueur et de la meilleur combinaison ou (None, None)
                          en cas d'égalité. Il est à noter que le premier élément du tuple n'est pas nécessairement de
                          type Joueur. Ce peut être un object quelconque (Joueur, entier, string, etc.), selon
                          l'utilisation souhaitée.
-
         """
         meilleur_valeur = -1
         meilleur_tuple = None
@@ -134,7 +132,6 @@ class Combinaison:
 
     def _lancer_des(self, n):
         """Lance n dés.
-
         Args:
             n (int): Le nombre de dés à lancer.
         """
