@@ -30,7 +30,7 @@ class Partie:
     def update_interface_joueur(self,index,joueur):
         result = str(joueur.combinaison.determiner_type_combinaison())
         self.interface.joueur_interface[index][0].config(text=joueur.nom)
-        label = "combinaison: " + joueur.combinaison.retourne_combinaison() + "\nLancer_restant: " + str(joueur.nb_lancers) + "\nresultat: " + result + "\nnombre de parti gagnee: " + str(joueur.nb_victoires)  +"\nparti jouer: " + str(joueur.nb_parties_jouees)
+        label = "combinaison: " + joueur.combinaison.retourne_combinaison() + "\nLancer_restant: " + str(self.max_lancers - joueur.nb_lancers) + "\nresultat: " + result + "\nnombre de parti gagnee: " + str(joueur.nb_victoires)  +"\nparti jouer: " + str(joueur.nb_parties_jouees)
         self.interface.joueur_interface[index][1].config(text=label)
 
     def jouer_partie(self):

@@ -31,29 +31,23 @@ class mon_interface(Tk):
                                        justify="left")
          self.player3.grid()
 
-         self.joueur_interface = [(self.frame_player1, self.player1), (self.frame_player2, self.player2),
-                                           (self.frame_player3, self.player3)]
+         self.joueur_interface = [(self.frame_player1, self.player1), (self.frame_player2, self.player2),(self.frame_player3, self.player3)]
+
          frame1 = Frame(self, borderwidth=2, relief=GROOVE).grid(row=2, column=2)
-         self.de_1 = Button(frame1, text="0",
-                                     command=Combinaison.ajouter_des_a_index(Combinaison, 1, Combinaison.index_a_relancer),
-                                     padx=5, pady=5).grid(row=2, column=3)
-         self.de_2 = Button(frame1, text="1",
-                                     command=Combinaison.ajouter_des_a_index(Combinaison, 2, Combinaison.index_a_relancer),
-                                     padx=5, pady=5).grid(row=2, column=4)
-         self.de_3 = Button(frame1, text="2",
-                                     command=Combinaison.ajouter_des_a_index(Combinaison, 3, Combinaison.index_a_relancer),
-                                     padx=5, pady=5).grid(row=2, column=5)
-         self.de_4 = Button(frame1, text="3",
-                                     command=Combinaison.ajouter_des_a_index(Combinaison, 4, Combinaison.index_a_relancer),
-                                     padx=5, pady=5).grid(row=2, column=6)
-         self.de_5 = Button(frame1, text="4",
-            command=Combinaison.ajouter_des_a_index(Combinaison, 5, Combinaison.index_a_relancer),
-                                     padx=5, pady=5).grid(row=2, column=7)
+         self.de_1 = Button(frame1, text="0", command=Combinaison.ajouter_des_a_index(Combinaison, 1, Combinaison.index_a_relancer),padx=5, pady=5)
+         self.de_1.grid(row=2, column=3)
+         self.de_2 = Button(frame1, text="1", command=Combinaison.ajouter_des_a_index(Combinaison, 2, Combinaison.index_a_relancer),padx=5, pady=5)
+         self.de_2.grid(row=2, column=4)
+         self.de_3 = Button(frame1, text="2", command=Combinaison.ajouter_des_a_index(Combinaison, 3, Combinaison.index_a_relancer),padx=5, pady=5)
+         self.de_3.grid(row=2, column=5)
+         self.de_4 = Button(frame1, text="3", command=Combinaison.ajouter_des_a_index(Combinaison, 4, Combinaison.index_a_relancer),padx=5, pady=5)
+         self.de_4.grid(row=2, column=6)
+         self.de_5 = Button(frame1, text="4", command=Combinaison.ajouter_des_a_index(Combinaison, 5, Combinaison.index_a_relancer),padx=5, pady=5)
+         self.de_5.grid(row=2, column=7)
          reset = Button(self, text="Nouvelle Partie").grid(row=4, column=6, columnspan=4)
          relancer_des = Button(self, text="Lancer dés").grid(row=3, column=2, columnspan=3)
          terminer_tour = Button(self, text="Terminer").grid(row=4, column=2, columnspan=3)
-         sauvegarde = Button(self, text="Sauvegarde", command=Partie.sauvegarde).grid(row=3, column=6,
-                                                                                               columnspan=4)
+         sauvegarde = Button(self, text="Sauvegarde", command=Partie.sauvegarde).grid(row=3, column=6, columnspan=4)
 
          self.menu = menu(self)
 
