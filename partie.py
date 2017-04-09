@@ -30,8 +30,9 @@ class Partie:
                 pass
 
     def update_interface_joueur(self,index,joueur):
+        result = str(joueur.combinaison.determiner_type_combinaison())
         self.interface.joueur_interface[index][0].config(text=joueur.nom)
-        label = "combinaison: " + joueur.combinaison.retourne_combinaison() + "\nLancer_restant: " + str(joueur.nb_lancers) + "\nresultat: \npourcentage de parti gagnee:\nparti jouer: " + str(joueur.nb_parties_jouees)
+        label = "combinaison: " + joueur.combinaison.retourne_combinaison() + "\nLancer_restant: " + str(joueur.nb_lancers) + "\nresultat: " + result + "\nnombre de parti gagnee: " + str(joueur.nb_victoires)  +"\nparti jouer: " + str(joueur.nb_parties_jouees)
         self.interface.joueur_interface[index][1].config(text=label)
 
     def jouer_partie(self):
@@ -113,8 +114,8 @@ class Partie:
 
         for joueur in cfg['joueur']:
             joueurs_restaure[cfg['joueur'][joueur]['emplacement']] = Joueur(joueur)
-            joueurs_restaure[cfg['joueur'][joueur]['emplacement']].nb_parties_jouees = cfg['joueur'][joueur]['nombre_victoire']
-            joueurs_restaure[cfg['joueur'][joueur]['emplacement']].nb_victoires = cfg['joueur'][joueur]['parti_jouer']
+            joueurs_restaure[cfg['joueur'][joueur]['emplacement']].nb_parties_jouees = cfg['joueur'][joueur]['parti_jouer']
+            joueurs_restaure[cfg['joueur'][joueur]['emplacement']].nb_victoires = cfg['joueur'][joueur]['nombre_victoire']
             joueurs_restaure[cfg['joueur'][joueur]['emplacement']].termine = cfg['joueur'][joueur]['fin_tour']
             joueurs_restaure[cfg['joueur'][joueur]['emplacement']].nb_lancers = cfg['joueur'][joueur]['nombre de lancer']
             joueurs_restaure[cfg['joueur'][joueur]['emplacement']].restaure_combinaison(cfg['joueur'][joueur]['combinaison'])
