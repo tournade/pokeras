@@ -24,7 +24,7 @@ class mon_interface(Tk):
                                        justify="left")
          self.player2.grid()
 
-         self.frame_player3 = LabelFrame(self, text="Player 2", padx=20, pady=20)
+         self.frame_player3 = LabelFrame(self, text="Player 3", padx=20, pady=20)
          self.frame_player3.grid(row=3, column=1)
          self.player3 = Label(self.frame_player3,
                                        text="combinaison:\nLancer_restant:\nresultat:\npourcentage de parti gagnee:\nparti jouer:",
@@ -71,11 +71,14 @@ class menu(Toplevel):
         self.transient(master)
         self.grab_set()
 
-        nom_joueur1 = Entry(self,textvariable=nom1).grid(row=2,column=3)
+        self.nom_joueur1 = Entry(self)
+        self.nom_joueur1.grid(row=2,column=3)
         joueur1= Label(self,text="Joueur 1").grid(row=1,column=3)
-        nom_joueur2 = Entry(self,textvariable=nom2).grid(row=2,column=4)
+        self.nom_joueur2 = Entry(self)
+        self.nom_joueur2.grid(row=2,column=4)
         joueur2= Label(self,text="Joueur 2").grid(row=1,column=4)
-        nom_joueur3 = Entry(self,textvariable=nom3).grid(row=2,column=5)
+        self.nom_joueur3 = Entry(self)
+        self.nom_joueur3.grid(row=2,column=5)
         joueur3= Label(self,text="Joueur 3").grid(row=1,column=5)
         joker_d_as = False
         Checkbutton(self,text="As en tant que joker",variable = joker_d_as).grid(row=4,column=5)
@@ -90,11 +93,23 @@ class menu(Toplevel):
         # TODO: Lorsque nous connaîtrons la gestion des erreurs,
         # TODO: nous pourrions valider le contenu de l'entrée
         # TODO: avant de fermer.
-        if(nom3 == ''):
-            Partie.joueurs.append(nom1,nom2)
+        list_joueur = []
+
+        if(self.nom_joueur3.get() == ""):
+
+            list_joueur.append(self.nom_joueur1.get())
+            list_joueur.append(self.nom_joueur2.get())
         else:
-            Partie.joueurs.append(nom1,nom2,nom3)
-        Partie.jouer_partie(Partie)
+            list_joueur.append(self.nom_joueur1.get())
+            list_joueur.append(self.nom_joueur2.get())
+            list_joueur.append(self.nom_joueur3.get())
+        list_obj_joueur = []
+        for i in list_joueur:
+            joueur = Joueur(i)
+            print(joueur.nom)
+            list_obj_joueur.append(joueur)
+        partie = Partie(list_obj_joueur,self.master)
+        partie.jouer_partie()
         # On sauvegarde le résultat.
 
         # On redonne le contrôle au parent.
@@ -112,7 +127,7 @@ class menu(Toplevel):
         try:
             Partie.restaure(Partie)
         except:
-            messagebox.showerror("Fichier non disponible","Le fichier de sauvegrade n'est pas disponible")
+            messagebox.showerror("Fichier non disponible","Le fichier de sauvegarde n'est pas disponible")
             partie = Partie("test", self.master)
             partie.restaure()
             self.grab_release()

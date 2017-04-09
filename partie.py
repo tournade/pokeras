@@ -7,14 +7,12 @@ from enums import Carte
 
 class Partie:
     """Représente une partie du jeu de Poker d'As
-
     Attributes:
         joueurs (list): La liste des joueurs.
     """
 
     def __init__(self, joueurs, interface):
         """Initialise une partie avec la liste de joueurs
-
         Args:
             joueurs (list): La liste des joueurs.
         """
@@ -75,7 +73,6 @@ class Partie:
     def _determiner_ordre(self):
         """Détermine l'ordre dans lequel les joueurs vont jouer.
         Return (list): La liste des index des joueurs indiquant l'ordre.
-
         Exemple:
             [2, 1, 0] indique que joueur 3 joue, suivi du joueur 2, puis du
             joueur 1.
