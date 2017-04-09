@@ -35,7 +35,6 @@ class Partie:
             if joueur.termine == True:
                 pass
 
-
     def jouer_partie(self):
         """ Joue une partie entre tous les joueurs et détermine le gagnant.
         Le compteur du nombre de partie est incrémenté pour chacun des joueurs.
