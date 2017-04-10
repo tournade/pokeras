@@ -57,8 +57,8 @@ class Joueur:
                     self.combinaison.relancer_des(des_a_relancer)
             self.termine = True
             print("Voici votre combinaison:")
-            print(str(self.combinaison))
-            return self.combinaison, self.combinaison.nb_lancers
+            for i in range(0, len(self.combinaison.des)):
+                self.interface.de_buttom[i].config(text=self.combinaison.des[i])
 
     def restaure_combinaison(self, combinaison):
         enlever =['>','<','[',']',' ','Carte.','NEUF','DIX','VALET','DAME','ROI','AS',':']
