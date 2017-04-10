@@ -11,7 +11,7 @@ class mon_interface(Tk):
      def __init__(self):
          super().__init__()
          self.wait = BooleanVar()
-         self.wait.set(True)
+         self.wait.set(False)
          self.relance_de = []
          self.frame_player1 = LabelFrame(self, text="Player 1", padx=20, pady=20)
          self.frame_player1.grid(row=1, column=1)
@@ -25,7 +25,6 @@ class mon_interface(Tk):
                                        text="combinaison:\nLancer_restant:\nresultat:\npourcentage de parti gagnee:\nparti jouer:",
                                        justify="left")
          self.player2.grid()
-
          self.frame_player3 = LabelFrame(self, text="Player 3", padx=20, pady=20)
          self.frame_player3.grid(row=3, column=1)
          self.player3 = Label(self.frame_player3,
@@ -50,7 +49,7 @@ class mon_interface(Tk):
          self.de_5 = Button(frame1, text="4", command= lambda: self.buttom_action(4),padx=5, pady=5)
          self.de_5.grid(row=2, column=7)
          self.de_buttom = [self.de_1,self.de_2,self.de_3,self.de_4,self.de_5]
-         reset = Button(self, text="Nouvelle Partie").grid(row=4, column=6, columnspan=4)
+         reset = Button(self, text="Nouvelle Partie",command=self.nouvelle_partie).grid(row=4, column=6, columnspan=4)
          relancer_des = Button(self, command=self.relance,text="Lancer dés").grid(row=3, column=2, columnspan=3)
          terminer_tour = Button(self, text="Terminer").grid(row=4, column=2, columnspan=3)
          sauvegarde = Button(self, text="Sauvegarde", command=Partie.sauvegarde).grid(row=3, column=6, columnspan=4)
@@ -61,7 +60,9 @@ class mon_interface(Tk):
          print(self.wait)
          self.update()
      def nouvelle_partie(self):
-         pass
+         Menu = menu(self)
+     def terminer_partie(self):
+        pass
      def buttom_action(self,index):
          if index in self.relance_de:
             print(self.partie.joueur_actif.combinaison.des[index])
@@ -75,13 +76,10 @@ class menu(Toplevel):
 
 
     def __init__(self,master):
-
         super().__init__(master)
-
         self.master = master
         self.transient(master)
         self.grab_set()
-
         self.nom_joueur1 = Entry(self)
         self.nom_joueur1.grid(row=2,column=3)
         joueur1= Label(self,text="Joueur 1").grid(row=1,column=3)
@@ -91,8 +89,8 @@ class menu(Toplevel):
         self.nom_joueur3 = Entry(self)
         self.nom_joueur3.grid(row=2,column=5)
         joueur3= Label(self,text="Joueur 3").grid(row=1,column=5)
-        joker_d_as = False
-        Checkbutton(self,text="As en tant que joker",variable = joker_d_as).grid(row=4,column=5)
+        self.joker_d_as = False
+        Checkbutton(self,text="As en tant que joker",variable = self.joker_d_as).grid(row=4,column=5)
         commencer_partie = Button(self,text="Commencer",command = self.nouvelle_parti).grid(row=4,column=2)
         regles = Button(self,text="Lire règles",command=self.lire_regles).grid(row=4,column=3)
         quitter = Button(self,text="Quitter",command=self.quit).grid(row=5,column=3)
@@ -105,7 +103,7 @@ class menu(Toplevel):
         # TODO: nous pourrions valider le contenu de l'entrée
         # TODO: avant de fermer.
         list_joueur = []
-
+        est_joker = self.joker_d_as
         if(self.nom_joueur3.get() == ""):
 
             list_joueur.append(self.nom_joueur1.get())
@@ -118,7 +116,7 @@ class menu(Toplevel):
         for i in list_joueur:
             joueur = Joueur(i)
             list_obj_joueur.append(joueur)
-        self.master.partie = Partie(list_obj_joueur,self.master)
+        self.master.partie = Partie(list_obj_joueur,self.master,est_joker=False)
         self.grab_release()
         self.master.focus_set()
         self.destroy()
