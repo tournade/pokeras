@@ -34,7 +34,10 @@ class Partie:
         self.interface.joueur_interface[index][0].config(text=joueur.nom)
         try:
             result = str(joueur.combinaison.determiner_type_combinaison())
-            label = "combinaison: " + joueur.combinaison.retourne_combinaison() + "\nLancer_restant: " + str(self.max_lancers - joueur.nb_lancers) + "\nresultat: " + result + "\nnombre de parti gagnee: " + str(joueur.nb_victoires)  +"\nparti jouer: " + str(joueur.nb_parties_jouees)
+            cbn =""
+            for i in joueur.combinaison.retourne_combinaison():
+                cbn += i + " "
+            label = "combinaison: " + cbn + "\nLancer_restant: \nresultat: " + result + "\nnombre de parti gagnee: " + str(joueur.nb_victoires)  +"\nparti jouer: " + str(joueur.nb_parties_jouees)
         except AttributeError:
             label = "combinaison: \nLancer_restant: \nresultat: \nnombre de parti gagnee: " + str(joueur.nb_victoires)  +"\nparti jouer: " + str(joueur.nb_parties_jouees)
 
@@ -49,9 +52,9 @@ class Partie:
         self.ordre = self._determiner_ordre()
 
         for i in range(0, len(self.ordre)):
-            joueur = self.joueurs[self.ordre[i]]
+            self.joueur_actif = self.joueurs[self.ordre[i]]
 
-            self.update_interface_joueur(i,joueur)
+            self.update_interface_joueur(i,self.joueur_actif)
 
         self.max_lancers = 3
         resultats = []
@@ -63,13 +66,12 @@ class Partie:
 
             self.interface.tour_a.config(text="C'est au tour de {}\n".format(self.joueur_actif))
             resultat, self.nb_tours = self.joueur_actif.jouer_tour(self.max_lancers,self.interface)
-            self.interface.wait_variable(self.interface.wait)
             if i == 0:
                 self.max_lancers = self.nb_tours
 
-            print("{} a eu {}\n\n".format(joueur, resultat.determiner_type_combinaison()))
+            self.update_interface_joueur(index, self.joueur_actif)
 
-            resultats.append((joueur, resultat))
+            resultats.append((self.joueur_actif, resultat))
 
         meilleur_joueur, _  = Combinaison.determiner_meilleur_combinaison(resultats)
         if meilleur_joueur is None:

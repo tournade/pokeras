@@ -41,7 +41,7 @@ class Joueur:
 
 
             while self.combinaison.nb_lancers < limite_lancers and not self.termine:
-                print("Voici votre combinaison:")
+
                 for i in range(0,len(self.combinaison.des)):
                     self.interface.de_buttom[i].config(text=self.combinaison.des[i])
                 self.interface.relance_de = []
@@ -56,9 +56,9 @@ class Joueur:
                         des_a_relancer.append(de)
                     self.combinaison.relancer_des(des_a_relancer)
             self.termine = True
-            print("Voici votre combinaison:")
             for i in range(0, len(self.combinaison.des)):
                 self.interface.de_buttom[i].config(text=self.combinaison.des[i])
+            return self.combinaison, self.combinaison.nb_lancers
 
     def restaure_combinaison(self, combinaison):
         enlever =['>','<','[',']',' ','Carte.','NEUF','DIX','VALET','DAME','ROI','AS',':']
