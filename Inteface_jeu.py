@@ -1,4 +1,4 @@
-from tkinter import Tk, Label, Button, Checkbutton, Entry, messagebox, Toplevel, LabelFrame, Frame, GROOVE
+from tkinter import Tk, Label, Button, BooleanVar, Checkbutton, Entry, messagebox, Toplevel, LabelFrame, Frame, GROOVE
 from joueur import Joueur
 from partie import Partie
 from combinaison import Combinaison
@@ -10,7 +10,8 @@ nom3 =''
 class mon_interface(Tk):
      def __init__(self):
          super().__init__()
-         self.wait = 1
+         self.wait = BooleanVar()
+         self.wait.set(True)
          self.relance_de = []
          self.frame_player1 = LabelFrame(self, text="Player 1", padx=20, pady=20)
          self.frame_player1.grid(row=1, column=1)
@@ -50,12 +51,15 @@ class mon_interface(Tk):
          self.de_5.grid(row=2, column=7)
          self.de_buttom = [self.de_1,self.de_2,self.de_3,self.de_4,self.de_5]
          reset = Button(self, text="Nouvelle Partie").grid(row=4, column=6, columnspan=4)
-         relancer_des = Button(self, text="Lancer dés").grid(row=3, column=2, columnspan=3)
+         relancer_des = Button(self, command=self.relance,text="Lancer dés").grid(row=3, column=2, columnspan=3)
          terminer_tour = Button(self, text="Terminer").grid(row=4, column=2, columnspan=3)
          sauvegarde = Button(self, text="Sauvegarde", command=Partie.sauvegarde).grid(row=3, column=6, columnspan=4)
 
          self.menu = menu(self)
-
+     def relance(self):
+         self.wait.set(False)
+         print(self.wait)
+         self.update()
      def nouvelle_partie(self):
          pass
      def buttom_action(self,index):

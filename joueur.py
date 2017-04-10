@@ -44,17 +44,17 @@ class Joueur:
                 print("Voici votre combinaison:")
                 for i in range(0,len(self.combinaison.des)):
                     self.interface.de_buttom[i].config(text=self.combinaison.des[i])
-
+                self.interface.relance_de = []
+                self.interface.wait.set(True)
                 self.interface.wait_variable(self.interface.wait)
-                relance = input("Quel(s) dé(s) voulez-vous rejouer (0 pour aucun), entrez la liste (ex. 1,5): ").strip()
-
-                if relance == "0":
+                relance = self.interface.relance_de
+                if relance == []:
                     self.termine = True
                 else:
                     des_a_relancer = []
-                    for de in relance.split(","):
-                        des_a_relancer.append(int(de)-1)
-                    self.combinaison.relancer_des(des_a_relancer)
+                    for de in relance:
+                        des_a_relancer.append(de)
+                    self.combinaison=self.combinaison.relancer_des(des_a_relancer)
             self.termine = True
             print("Voici votre combinaison:")
             print(str(self.combinaison))

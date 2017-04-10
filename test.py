@@ -1,10 +1,26 @@
-import yaml
+import tkinter
 
-parti = {
-    'test': 1,
-    'test2': [1,2,3],
-    'test3': {'a':1,'b':2,'c':3}
-}
+root = tkinter.Tk()
+waitVar = tkinter.BooleanVar()
+isDone = False
 
 
-print(yaml.dump(parti, default_flow_style=False ))
+def trigger():
+    global waitVar
+    waitVar.set(True)
+
+
+def script():
+    global isDone, waitVar
+    for count in range(10):
+        print
+        "script", count
+        if not isDone:
+            root.after(1000, trigger)
+            root.wait_variable(waitVar)
+        else:
+            print
+            "script cancelled"
+            return
+    print
+    "script done"
