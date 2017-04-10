@@ -54,7 +54,7 @@ class Joueur:
                     des_a_relancer = []
                     for de in relance:
                         des_a_relancer.append(de)
-                    self.combinaison=self.combinaison.relancer_des(des_a_relancer)
+                    self.combinaison.relancer_des(des_a_relancer)
             self.termine = True
             print("Voici votre combinaison:")
             print(str(self.combinaison))
