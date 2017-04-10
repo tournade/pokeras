@@ -16,8 +16,10 @@ class Partie:
         Args:
             joueurs (list): La liste des joueurs.
         """
+
         self.joueurs = joueurs
         self.interface = interface
+        self.max_lancers = 3
 
     def restaure_partie(self):
         for i in range(0, len(self.ordre)):
@@ -28,9 +30,14 @@ class Partie:
                 pass
 
     def update_interface_joueur(self,index,joueur):
-        result = str(joueur.combinaison.determiner_type_combinaison())
+
         self.interface.joueur_interface[index][0].config(text=joueur.nom)
-        label = "combinaison: " + joueur.combinaison.retourne_combinaison() + "\nLancer_restant: " + str(self.max_lancers - joueur.nb_lancers) + "\nresultat: " + result + "\nnombre de parti gagnee: " + str(joueur.nb_victoires)  +"\nparti jouer: " + str(joueur.nb_parties_jouees)
+        try:
+            result = str(joueur.combinaison.determiner_type_combinaison())
+            label = "combinaison: " + joueur.combinaison.retourne_combinaison() + "\nLancer_restant: " + str(self.max_lancers - joueur.nb_lancers) + "\nresultat: " + result + "\nnombre de parti gagnee: " + str(joueur.nb_victoires)  +"\nparti jouer: " + str(joueur.nb_parties_jouees)
+        except AttributeError:
+            label = "combinaison: \nLancer_restant: \nresultat: \nnombre de parti gagnee: " + str(joueur.nb_victoires)  +"\nparti jouer: " + str(joueur.nb_parties_jouees)
+
         self.interface.joueur_interface[index][1].config(text=label)
 
     def jouer_partie(self):
@@ -40,23 +47,23 @@ class Partie:
         Le joueur gagnant est affiché à l'écran (ou un message indiquant que la partie est nulle, s'il y a lieu).
         """
         self.ordre = self._determiner_ordre()
-        print("\n\nL'ordre est tiré au hasard.")
+
         for i in range(0, len(self.ordre)):
             joueur = self.joueurs[self.ordre[i]]
-            print("Le joueur {} est {}".format(i+1, joueur))
 
-        print()
+            self.update_interface_joueur(i,joueur)
 
         self.max_lancers = 3
         resultats = []
 
         for i in range(0, len(self.ordre)):
             index = self.ordre[i]
-            joueur = self.joueurs[index]
-            joueur.nb_parties_jouees += 1
+            self.joueur_actif = self.joueurs[index]
+            self.joueur_actif.nb_parties_jouees += 1
 
-            print("C'est au tour de {}\n".format(joueur))
-            resultat, self.nb_tours = joueur.jouer_tour(self.max_lancers)
+            self.interface.tour_a.config(text="C'est au tour de {}\n".format(self.joueur_actif))
+            resultat, self.nb_tours = self.joueur_actif.jouer_tour(self.max_lancers,self.interface)
+            self.interface.wait_variable(self.interface.wait)
             if i == 0:
                 self.max_lancers = self.nb_tours
 

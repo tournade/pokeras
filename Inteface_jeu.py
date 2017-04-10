@@ -10,6 +10,7 @@ nom3 =''
 class mon_interface(Tk):
      def __init__(self):
          super().__init__()
+         self.wait = 1
          self.relance_de = []
          self.frame_player1 = LabelFrame(self, text="Player 1", padx=20, pady=20)
          self.frame_player1.grid(row=1, column=1)
@@ -32,6 +33,9 @@ class mon_interface(Tk):
          self.player3.grid()
 
          self.joueur_interface = [(self.frame_player1, self.player1), (self.frame_player2, self.player2),(self.frame_player3, self.player3)]
+
+         self.tour_a = Label(self,text="C'est au tour de ",justify="center")
+         self.tour_a.grid(row=1, column=2, columnspan=5)
 
          frame1 = Frame(self, borderwidth=2, relief=GROOVE).grid(row=2, column=2)
          self.de_1 = Button(frame1, text="0", command= lambda: self.buttom_action(0) ,padx=5, pady=5)
@@ -56,7 +60,8 @@ class mon_interface(Tk):
          pass
      def buttom_action(self,index):
          if index in self.relance_de:
-            self.de_buttom[index].config(text=index)
+            print(self.partie.joueur_actif.combinaison.des[index])
+            self.de_buttom[index].config(text=self.partie.joueur_actif.combinaison.des[index])
             self.relance_de.remove(index)
          else:
             self.de_buttom[index].config(text="")
@@ -108,16 +113,16 @@ class menu(Toplevel):
         list_obj_joueur = []
         for i in list_joueur:
             joueur = Joueur(i)
-            print(joueur.nom)
             list_obj_joueur.append(joueur)
-        partie = Partie(list_obj_joueur,self.master)
-        partie.jouer_partie()
-        # On sauvegarde le résultat.
-
-        # On redonne le contrôle au parent.
+        self.master.partie = Partie(list_obj_joueur,self.master)
         self.grab_release()
         self.master.focus_set()
         self.destroy()
+        self.master.partie.jouer_partie()
+        # On sauvegarde le résultat.
+
+        # On redonne le contrôle au parent.
+
     def lire_regles(self):
         messagebox.showinfo("Règles du jeu","Le but du jeu est d'obtenir la combinaison ayant la plus grande valeur."
         "La combinaison valant le plus est le Quinton, soit lui avec 5 figures similaires, le carré avec 4 figures similaires."

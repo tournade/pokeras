@@ -22,7 +22,7 @@ class Joueur:
         self.restore = False
         self.termine = False
 
-    def jouer_tour(self, limite_lancers):
+    def jouer_tour(self, limite_lancers,interface):
         """
         Joue le tour d'un joueur.
         Args:
@@ -31,6 +31,7 @@ class Joueur:
         Returns (Combinaison): La combinaison obtenue
 
         """
+        self.interface = interface
         if self.termine == True:
             pass
         elif self.restore == True:
@@ -41,7 +42,10 @@ class Joueur:
 
             while self.combinaison.nb_lancers < limite_lancers and not self.termine:
                 print("Voici votre combinaison:")
-                print(str(self.combinaison))
+                for i in range(0,len(self.combinaison.des)):
+                    self.interface.de_buttom[i].config(text=self.combinaison.des[i])
+
+                self.interface.wait_variable(self.interface.wait)
                 relance = input("Quel(s) dé(s) voulez-vous rejouer (0 pour aucun), entrez la liste (ex. 1,5): ").strip()
 
                 if relance == "0":
