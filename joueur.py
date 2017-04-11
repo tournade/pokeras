@@ -42,7 +42,8 @@ class Joueur:
 
 
             while self.combinaison.nb_lancers < limite_lancers and not self.termine:
-
+                attribute_lancer = "tour numero: " + str(self.combinaison.nb_lancers) +"/" + str(limite_lancers)
+                self.interface.lance_a_faire.config(text=attribute_lancer)
                 for i in range(0,len(self.combinaison.des)):
                     self.interface.de_buttom[i].config(text=self.combinaison.des[i])
                 self.interface.relance_de = []

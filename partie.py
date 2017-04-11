@@ -38,9 +38,9 @@ class Partie:
             cbn =""
             for i in joueur.combinaison.retourne_combinaison():
                 cbn += i + " "
-            label = "combinaison: " + cbn + "\nLancer_restant: \nresultat: " + result + "\nnombre de parti gagnee: " + str(joueur.nb_victoires)  +"\nparti jouer: " + str(joueur.nb_parties_jouees)
+            label = "combinaison: " + cbn + "\nresultat: " + result + "\nnombre de parti gagnee: " + str(joueur.nb_victoires)  +"\nparti jouer: " + str(joueur.nb_parties_jouees)
         except AttributeError or IndexError:
-            label = "combinaison: \nLancer_restant: \nresultat: \nnombre de parti gagnee: " + str(joueur.nb_victoires)  +"\nparti jouer: " + str(joueur.nb_parties_jouees)
+            label = "combinaison: \nresultat: \nnombre de parti gagnee: " + str(joueur.nb_victoires)  +"\nparti jouer: " + str(joueur.nb_parties_jouees)
 
         self.interface.joueur_interface[index][1].config(text=label)
 
