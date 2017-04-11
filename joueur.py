@@ -32,7 +32,6 @@ class Joueur:
         Returns (Combinaison): La combinaison obtenue
 
         """
-
         if self.termine == True:
             pass
         elif self.restore == True:
