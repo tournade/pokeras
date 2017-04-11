@@ -52,15 +52,17 @@ class Partie:
         self.ordre = self._determiner_ordre()
 
         for i in range(0, len(self.ordre)):
-            self.joueur_actif = self.joueurs[self.ordre[i]]
+            index = self.ordre[i]
 
-            self.update_interface_joueur(i,self.joueur_actif)
+            self.joueur_actif = self.joueurs[self.ordre[i]]
+            self.update_interface_joueur(index,self.joueur_actif)
 
         self.max_lancers = 3
         resultats = []
 
         for i in range(0, len(self.ordre)):
             index = self.ordre[i]
+
             self.joueur_actif = self.joueurs[index]
             self.joueur_actif.nb_parties_jouees += 1
 
@@ -75,9 +77,9 @@ class Partie:
 
         meilleur_joueur, _  = Combinaison.determiner_meilleur_combinaison(resultats)
         if meilleur_joueur is None:
-            print("La partie est nulle.")
+            self.interface.tour_a.config(text="La partie est nulle.")
         else:
-            print("{} a gagné".format(meilleur_joueur))
+            self.interface.tour_a.config(text="{} a gagné".format(meilleur_joueur))
             meilleur_joueur.nb_victoires += 1
 
     def _determiner_ordre(self):

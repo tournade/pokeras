@@ -50,23 +50,32 @@ class mon_interface(Tk):
          self.de_5 = Button(frame1, text="4", width=2, height=2, command= lambda: self.buttom_action(4),padx=5, pady=5)
          self.de_5.grid(row=2, column=7)
          self.de_buttom = [self.de_1,self.de_2,self.de_3,self.de_4,self.de_5]
-         reset = Button(self, text="Nouvelle Partie",command=self.nouvelle_partie).grid(row=4, column=6, columnspan=4)
-         relancer_des = Button(self, command=self.relance,text="Lancer dés").grid(row=3, column=2, columnspan=3)
-         terminer_tour = Button(self, text="Terminer").grid(row=4, column=2, columnspan=3)
-         sauvegarde = Button(self, text="Sauvegarde", command=Partie.sauvegarde).grid(row=3, column=6, columnspan=4)
+         Button(self, text="Nouvelle Partie",command=self.nouvelle_partie).grid(row=4, column=6, columnspan=4)
+         Button(self, command=self.relance,text="Garder/Lancer dés").grid(row=3, column=2, columnspan=3)
+         self.tour = Button(self, text="Tour suivant", command=self.next_game)
+         self.tour.grid(row=4, column=2, columnspan=3)
+
+         Button(self, text="Sauvegarde", command=self.sauvegarde).grid(row=3, column=6, columnspan=4)
 
          self.menu = menu(self)
+     def next_game(self):
+         self.partie = Partie(self.list_obj_joueur, self.master)
+         self.tour.config(state="disabled")
+         self.partie.jouer_partie()
+         self.tour.config(state="normal")
+     def sauvegarde(self):
+         pass
      def relance(self):
          self.wait.set(False)
-         print(self.wait)
+
          self.update()
      def nouvelle_partie(self):
          Menu = menu(self)
      def terminer_partie(self):
         pass
+
      def buttom_action(self,index):
          if index in self.relance_de:
-            print(self.partie.joueur_actif.combinaison.des[index])
             self.de_buttom[index].config(text=self.partie.joueur_actif.combinaison.des[index])
             self.relance_de.remove(index)
          else:
@@ -106,24 +115,27 @@ class menu(Toplevel):
         # TODO: avant de fermer.
         list_joueur = []
         est_joker = self.joker_d_as.get()
-        print(est_joker)
-        if(self.nom_joueur3.get() == ""):
 
+        if(self.nom_joueur3.get() == ""):
+            self.master.frame_player3.destroy()
             list_joueur.append(self.nom_joueur1.get())
             list_joueur.append(self.nom_joueur2.get())
         else:
             list_joueur.append(self.nom_joueur1.get())
             list_joueur.append(self.nom_joueur2.get())
             list_joueur.append(self.nom_joueur3.get())
-        list_obj_joueur = []
+            self.master.list_obj_joueur = []
         for i in list_joueur:
             joueur = Joueur(i)
-            list_obj_joueur.append(joueur)
-        self.master.partie = Partie(list_obj_joueur,self.master)
+            self.master.list_obj_joueur.append(joueur)
+        self.master.partie = Partie(self.master.list_obj_joueur,self.master)
         self.grab_release()
         self.master.focus_set()
         self.destroy()
+        self.master.tour.config(state="disabled")
         self.master.partie.jouer_partie()
+        self.master.tour.config(state="normal")
+
         # On sauvegarde le résultat.
 
         # On redonne le contrôle au parent.
@@ -140,12 +152,12 @@ class menu(Toplevel):
             Partie.restaure(Partie)
         except:
             messagebox.showerror("Fichier non disponible","Le fichier de sauvegarde n'est pas disponible")
-            partie = Partie("test", self.master)
-            partie.restaure()
+            self.master.partie = Partie("test", self.master)
+            self.master.partie.restaure()
             self.grab_release()
             self.master.focus_set()
             self.destroy()
-            partie.restaure_partie()
+            self.master.partie.restaure_partie()
 if __name__ == '__main__':
     # Instanciation de la fenêtre et démarrage de sa boucle principale.
     fenetre = mon_interface()
