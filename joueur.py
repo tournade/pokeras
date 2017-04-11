@@ -9,7 +9,7 @@ class Joueur:
         nb_victoires (int): Le nombre de parties remportées.
         nb_parties_jouees (int): Le nombre de parties jouées.
     """
-    def __init__(self, nom):
+    def __init__(self, nom,interface):
         """
         Initialise un nouveau joueur avec son nom.
 
@@ -21,8 +21,9 @@ class Joueur:
         self.nb_parties_jouees = 0
         self.restore = False
         self.termine = False
+        self.interface =interface
 
-    def jouer_tour(self, limite_lancers,interface):
+    def jouer_tour(self, limite_lancers):
         """
         Joue le tour d'un joueur.
         Args:
@@ -31,7 +32,7 @@ class Joueur:
         Returns (Combinaison): La combinaison obtenue
 
         """
-        self.interface = interface
+
         if self.termine == True:
             pass
         elif self.restore == True:

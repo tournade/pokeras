@@ -20,6 +20,7 @@ class Partie:
         self.joueurs = joueurs
         self.interface = interface
         self.max_lancers = 3
+        self.nb_tours = 0
 
     def restaure_partie(self):
         for i in range(0, len(self.ordre)):
@@ -38,7 +39,7 @@ class Partie:
             for i in joueur.combinaison.retourne_combinaison():
                 cbn += i + " "
             label = "combinaison: " + cbn + "\nLancer_restant: \nresultat: " + result + "\nnombre de parti gagnee: " + str(joueur.nb_victoires)  +"\nparti jouer: " + str(joueur.nb_parties_jouees)
-        except AttributeError:
+        except AttributeError or IndexError:
             label = "combinaison: \nLancer_restant: \nresultat: \nnombre de parti gagnee: " + str(joueur.nb_victoires)  +"\nparti jouer: " + str(joueur.nb_parties_jouees)
 
         self.interface.joueur_interface[index][1].config(text=label)
@@ -55,7 +56,12 @@ class Partie:
             index = self.ordre[i]
 
             self.joueur_actif = self.joueurs[self.ordre[i]]
-            self.update_interface_joueur(index,self.joueur_actif)
+            self.joueur_actif.termine = False
+            try:
+                self.joueur_actif.combinaison = 1
+            except AttributeError:
+                pass
+            self.update_interface_joueur(index, self.joueur_actif)
 
         self.max_lancers = 3
         resultats = []
@@ -67,7 +73,10 @@ class Partie:
             self.joueur_actif.nb_parties_jouees += 1
 
             self.interface.tour_a.config(text="C'est au tour de {}\n".format(self.joueur_actif))
-            resultat, self.nb_tours = self.joueur_actif.jouer_tour(self.max_lancers,self.interface)
+            self.update_interface_joueur(index, self.joueur_actif)
+
+
+            resultat, self.nb_tours = self.joueur_actif.jouer_tour(self.max_lancers)
             if i == 0:
                 self.max_lancers = self.nb_tours
 

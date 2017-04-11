@@ -59,7 +59,7 @@ class mon_interface(Tk):
 
          self.menu = menu(self)
      def next_game(self):
-         self.partie = Partie(self.list_obj_joueur, self.master)
+         self.partie = Partie(self.list_obj_joueur, self)
          self.tour.config(state="disabled")
          self.partie.jouer_partie()
          self.tour.config(state="normal")
@@ -76,6 +76,8 @@ class mon_interface(Tk):
 
      def buttom_action(self,index):
          if index in self.relance_de:
+            print(index)
+            print(self.partie.joueur_actif.combinaison.des[index])
             self.de_buttom[index].config(text=self.partie.joueur_actif.combinaison.des[index])
             self.relance_de.remove(index)
          else:
@@ -126,7 +128,7 @@ class menu(Toplevel):
             list_joueur.append(self.nom_joueur3.get())
             self.master.list_obj_joueur = []
         for i in list_joueur:
-            joueur = Joueur(i)
+            joueur = Joueur(i,self.master)
             self.master.list_obj_joueur.append(joueur)
         self.master.partie = Partie(self.master.list_obj_joueur,self.master)
         self.grab_release()
