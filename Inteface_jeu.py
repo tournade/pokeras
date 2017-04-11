@@ -1,4 +1,5 @@
-from tkinter import Tk, Label, Button, BooleanVar, Checkbutton, Entry, messagebox, Toplevel, LabelFrame, Frame, GROOVE
+from tkinter import Tk, Label, Button, BooleanVar, Checkbutton, Entry, messagebox, Toplevel, LabelFrame, Frame, GROOVE, \
+    IntVar
 from joueur import Joueur
 from partie import Partie
 from combinaison import Combinaison
@@ -38,15 +39,15 @@ class mon_interface(Tk):
          self.tour_a.grid(row=1, column=2, columnspan=5)
 
          frame1 = Frame(self, borderwidth=2, relief=GROOVE).grid(row=2, column=2)
-         self.de_1 = Button(frame1, text="0", command= lambda: self.buttom_action(0) ,padx=5, pady=5)
+         self.de_1 = Button(frame1, text="0", width=2, height=2, command= lambda: self.buttom_action(0) ,padx=5, pady=5)
          self.de_1.grid(row=2, column=3)
-         self.de_2 = Button(frame1, text="1", command= lambda: self.buttom_action(1),padx=5, pady=5)
+         self.de_2 = Button(frame1, text="1", width=2, height=2, command= lambda: self.buttom_action(1),padx=5, pady=5)
          self.de_2.grid(row=2, column=4)
-         self.de_3 = Button(frame1, text="2", command= lambda: self.buttom_action(2),padx=5, pady=5)
+         self.de_3 = Button(frame1, text="2", width=2, height=2, command= lambda: self.buttom_action(2),padx=5, pady=5)
          self.de_3.grid(row=2, column=5)
-         self.de_4 = Button(frame1, text="3", command= lambda: self.buttom_action(3),padx=5, pady=5)
+         self.de_4 = Button(frame1, text="3", width=2, height=2, command= lambda: self.buttom_action(3),padx=5, pady=5)
          self.de_4.grid(row=2, column=6)
-         self.de_5 = Button(frame1, text="4", command= lambda: self.buttom_action(4),padx=5, pady=5)
+         self.de_5 = Button(frame1, text="4", width=2, height=2, command= lambda: self.buttom_action(4),padx=5, pady=5)
          self.de_5.grid(row=2, column=7)
          self.de_buttom = [self.de_1,self.de_2,self.de_3,self.de_4,self.de_5]
          reset = Button(self, text="Nouvelle Partie",command=self.nouvelle_partie).grid(row=4, column=6, columnspan=4)
@@ -89,8 +90,9 @@ class menu(Toplevel):
         self.nom_joueur3 = Entry(self)
         self.nom_joueur3.grid(row=2,column=5)
         joueur3= Label(self,text="Joueur 3").grid(row=1,column=5)
-        self.joker_d_as = False
-        Checkbutton(self,text="As en tant que joker",variable = self.joker_d_as).grid(row=4,column=5)
+        self.joker_d_as = IntVar()
+        self.check = Checkbutton(self,text="As en tant que joker",variable = self.joker_d_as)
+        self.check.grid(row=4,column=5)
         commencer_partie = Button(self,text="Commencer",command = self.nouvelle_parti).grid(row=4,column=2)
         regles = Button(self,text="Lire règles",command=self.lire_regles).grid(row=4,column=3)
         quitter = Button(self,text="Quitter",command=self.quit).grid(row=5,column=3)
@@ -103,7 +105,8 @@ class menu(Toplevel):
         # TODO: nous pourrions valider le contenu de l'entrée
         # TODO: avant de fermer.
         list_joueur = []
-        est_joker = self.joker_d_as
+        est_joker = self.joker_d_as.get()
+        print(est_joker)
         if(self.nom_joueur3.get() == ""):
 
             list_joueur.append(self.nom_joueur1.get())
@@ -116,7 +119,7 @@ class menu(Toplevel):
         for i in list_joueur:
             joueur = Joueur(i)
             list_obj_joueur.append(joueur)
-        self.master.partie = Partie(list_obj_joueur,self.master,est_joker=False)
+        self.master.partie = Partie(list_obj_joueur,self.master)
         self.grab_release()
         self.master.focus_set()
         self.destroy()
