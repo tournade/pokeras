@@ -52,20 +52,28 @@ class mon_interface(Tk):
          self.de_5.grid(row=2, column=7)
          self.de_buttom = [self.de_1,self.de_2,self.de_3,self.de_4,self.de_5]
          Button(self, text="Nouvelle Partie",command=self.nouvelle_partie).grid(row=4, column=6, columnspan=4)
-         Button(self, command=self.relance,text="Garder/Lancer dés").grid(row=3, column=2, columnspan=3)
+         self.blancer = Button(self, command=self.relance,text="Garder/Lancer dés")
+         self.blancer.grid(row=3, column=2, columnspan=3)
          self.tour = Button(self, text="Tour suivant", command=self.next_game)
          self.tour.grid(row=4, column=2, columnspan=3)
 
-         Button(self, text="Sauvegarde", command=self.sauvegarde).grid(row=3, column=6, columnspan=4)
+         self.sauvegarde = Button(self, text="Sauvegarde", command=self.fonction_sauvegarde)
+         self.sauvegarde.grid(row=3, column=6, columnspan=4)
 
          self.menu = menu(self)
      def next_game(self):
          self.partie = Partie(self.list_obj_joueur, self)
+         for i in  self.de_buttom:
+             i.config(state="normal")
+         self.blancer.config(state="normal")
          self.tour.config(state="disabled")
          self.partie.jouer_partie()
          self.tour.config(state="normal")
-     def sauvegarde(self):
-         pass
+         self.blancer.config(state="disabled")
+         for i in  self.de_buttom:
+             i.config(state="disabled")
+     def fonction_sauvegarde(self):
+         self.partie.sauvegarde()
      def relance(self):
          self.wait.set(False)
 
@@ -118,7 +126,7 @@ class menu(Toplevel):
         # TODO: avant de fermer.
         list_joueur = []
         est_joker = self.joker_d_as.get()
-
+        self.master.list_obj_joueur = []
         if(self.nom_joueur3.get() == ""):
             self.master.frame_player3.destroy()
             list_joueur.append(self.nom_joueur1.get())
@@ -127,7 +135,7 @@ class menu(Toplevel):
             list_joueur.append(self.nom_joueur1.get())
             list_joueur.append(self.nom_joueur2.get())
             list_joueur.append(self.nom_joueur3.get())
-            self.master.list_obj_joueur = []
+
         for i in list_joueur:
             joueur = Joueur(i,self.master)
             self.master.list_obj_joueur.append(joueur)
@@ -135,10 +143,14 @@ class menu(Toplevel):
         self.grab_release()
         self.master.focus_set()
         self.destroy()
+
+        self.master.blancer.config(state="normal")
         self.master.tour.config(state="disabled")
         self.master.partie.jouer_partie()
         self.master.tour.config(state="normal")
-
+        self.master.blancer.config(state="disable")
+        for i in self.master.de_buttom:
+            i.config(state="disabled")
         # On sauvegarde le résultat.
 
         # On redonne le contrôle au parent.

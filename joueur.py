@@ -48,6 +48,7 @@ class Joueur:
                 self.interface.relance_de = []
                 self.interface.wait.set(True)
                 self.interface.wait_variable(self.interface.wait)
+                self.interface.sauvegarde.config(state="disabled")
                 relance = self.interface.relance_de
                 if relance == []:
                     self.termine = True

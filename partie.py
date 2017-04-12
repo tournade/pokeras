@@ -67,6 +67,7 @@ class Partie:
         resultats = []
 
         for i in range(0, len(self.ordre)):
+            self.interface.sauvegarde.config(state="normal")
             index = self.ordre[i]
 
             self.joueur_actif = self.joueurs[index]
@@ -111,9 +112,12 @@ class Partie:
             save["joueur"][joueur.nom]['emplacement'] = etat
             save["joueur"][joueur.nom]["parti_jouer"] = joueur.nb_parties_jouees
             save["joueur"][joueur.nom]["nombre_victoire"] = joueur.nb_victoires
-            save["joueur"][joueur.nom]["combinaison"] = str(joueur.combinaison.des)
-            save["joueur"][joueur.nom]["fin_tour"] = joueur.termine
-            save["joueur"][joueur.nom]["nombre de lancer"] = joueur.combinaison.nb_lancers
+            try:
+                save["joueur"][joueur.nom]["combinaison"] = str(joueur.combinaison.des)
+                save["joueur"][joueur.nom]["fin_tour"] = joueur.termine
+                save["joueur"][joueur.nom]["nombre de lancer"] = joueur.combinaison.nb_lancers
+            except AttributeError:
+                pass
             etat += 1
         save["partie"] = {}
         save["partie"]["ordre"] = self.ordre
