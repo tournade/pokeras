@@ -13,9 +13,10 @@ class Combinaison:
         Carte.AS, Carte.ROI, Carte.DAME, Carte.VALET, Carte.DIX, Carte.NEUF
     ]
     index_a_relancer = []
-    def __init__(self, des = None):
+    def __init__(self, des = None,est_joker=True):
         """Initialise une combinaison"""
         self.nb_lancers = 1
+        self.est_joker = est_joker
         if des is None:
             self.des = self._lancer_des(5)
         else:
@@ -167,7 +168,10 @@ class Combinaison:
         egalite = False
 
         for joueur, combinaison in combinaisons:
-            type = combinaison.determiner_type_combinaison()
+            if (combinaison.est_joker==False):
+                type = combinaison.determiner_type_combinaison_sans_joker()
+            else:
+                type = combinaison.determiner_type_combinaison()
             if type.value == meilleur_valeur:
                 egalite = True
             elif type.value > meilleur_valeur:
