@@ -33,11 +33,13 @@ class Joueur:
 
         """
         if self.termine == True:
-            pass
-        elif self.restore == True:
-            pass
+            return self.combinaison, self.combinaison.nb_lancers
         else:
-            self.combinaison = Combinaison()
+            try:
+                if type(self.combinaison.des) == list:
+                    pass
+            except AttributeError:
+                self.combinaison = Combinaison()
 
 
             while self.combinaison.nb_lancers < limite_lancers and not self.termine:

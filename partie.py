@@ -3,7 +3,7 @@ import yaml
 from joueur import Joueur
 from combinaison import Combinaison
 from random import shuffle
-from enums import Carte
+
 
 class Partie:
     """Représente une partie du jeu de Poker d'As
@@ -21,6 +21,9 @@ class Partie:
         self.interface = interface
         self.max_lancers = 3
         self.nb_tours = 0
+        for joueur in joueurs:
+            joueur.termine = False
+        self.restore = False
 
     def restaure_partie(self):
         for i in range(0, len(self.ordre)):
@@ -50,17 +53,18 @@ class Partie:
         Le compteur de victoires est incrémenté pour le joueur gagnant (si la partie n'est pas nulle).
         Le joueur gagnant est affiché à l'écran (ou un message indiquant que la partie est nulle, s'il y a lieu).
         """
-        self.ordre = self._determiner_ordre()
+        if self.restore == False:
+            self.ordre = self._determiner_ordre()
 
         for i in range(0, len(self.ordre)):
             index = self.ordre[i]
 
             self.joueur_actif = self.joueurs[self.ordre[i]]
-            self.joueur_actif.termine = False
-            try:
-                self.joueur_actif.combinaison = 1
-            except AttributeError:
-                pass
+            if self.restore == False:
+                try:
+                    self.joueur_actif.combinaison = 1
+                except AttributeError:
+                    pass
             self.update_interface_joueur(index, self.joueur_actif)
 
         self.max_lancers = 3
@@ -71,7 +75,11 @@ class Partie:
             index = self.ordre[i]
 
             self.joueur_actif = self.joueurs[index]
-            self.joueur_actif.nb_parties_jouees += 1
+            try:
+                if type(self.joueur_actif.combinaison.des) != list:
+                    pass
+            except AttributeError:
+                self.joueur_actif.nb_parties_jouees += 1
 
             self.interface.tour_a.config(text="C'est au tour de {}\n".format(self.joueur_actif))
             self.update_interface_joueur(index, self.joueur_actif)
@@ -117,7 +125,8 @@ class Partie:
                 save["joueur"][joueur.nom]["fin_tour"] = joueur.termine
                 save["joueur"][joueur.nom]["nombre de lancer"] = joueur.combinaison.nb_lancers
             except AttributeError:
-                pass
+                save["joueur"][joueur.nom]["fin_tour"] = False
+
             etat += 1
         save["partie"] = {}
         save["partie"]["ordre"] = self.ordre
@@ -134,15 +143,19 @@ class Partie:
             joueurs_restaure.append(joueur)
 
         for joueur in cfg['joueur']:
-            joueurs_restaure[cfg['joueur'][joueur]['emplacement']] = Joueur(joueur)
+            joueurs_restaure[cfg['joueur'][joueur]['emplacement']] = Joueur(joueur,self.interface)
             joueurs_restaure[cfg['joueur'][joueur]['emplacement']].nb_parties_jouees = cfg['joueur'][joueur]['parti_jouer']
             joueurs_restaure[cfg['joueur'][joueur]['emplacement']].nb_victoires = cfg['joueur'][joueur]['nombre_victoire']
             joueurs_restaure[cfg['joueur'][joueur]['emplacement']].termine = cfg['joueur'][joueur]['fin_tour']
-            joueurs_restaure[cfg['joueur'][joueur]['emplacement']].nb_lancers = cfg['joueur'][joueur]['nombre de lancer']
-            joueurs_restaure[cfg['joueur'][joueur]['emplacement']].restaure_combinaison(cfg['joueur'][joueur]['combinaison'])
+            try:
+                joueurs_restaure[cfg['joueur'][joueur]['emplacement']].restaure_combinaison(cfg['joueur'][joueur]['combinaison'])
+                joueurs_restaure[cfg['joueur'][joueur]['emplacement']].combinaison.nb_lancers = cfg['joueur'][joueur]['nombre de lancer']
+            except KeyError:
+                joueurs_restaure[cfg['joueur'][joueur]['emplacement']].nb_lancers = 0
             self.ordre = cfg["partie"]["ordre"]
             self.max_lancers = cfg["partie"]["limite"]
         self.joueurs = joueurs_restaure
+        self.interface.list_obj_joueur = self.joueurs
 
 
 if __name__ == "__main__":

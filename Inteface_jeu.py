@@ -163,16 +163,18 @@ class menu(Toplevel):
         "et le carré avec une paire de figures. Chacun des joueurs à le droit 3 lancers sauf si le joueur précédent a"
         "a réussi en moins de coups, donc le nombre de coups réussis est le nouveau total")
     def charger_partie(self):
-        try:
-            Partie.restaure(Partie)
-        except:
-            messagebox.showerror("Fichier non disponible","Le fichier de sauvegarde n'est pas disponible")
-            self.master.partie = Partie("test", self.master)
+            self.master.partie = Partie(interface=self.master, joueurs=[])
             self.master.partie.restaure()
+            self.master.partie.restore = True
             self.grab_release()
             self.master.focus_set()
             self.destroy()
-            self.master.partie.restaure_partie()
+            self.master.blancer.config(state="normal")
+            self.master.tour.config(state="disabled")
+            self.master.partie.jouer_partie()
+            self.master.tour.config(state="normal")
+            self.master.blancer.config(state="disable")
+
 if __name__ == '__main__':
     # Instanciation de la fenêtre et démarrage de sa boucle principale.
     fenetre = mon_interface()
