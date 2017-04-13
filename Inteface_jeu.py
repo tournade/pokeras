@@ -79,9 +79,8 @@ class mon_interface(Tk):
 
          self.update()
      def nouvelle_partie(self):
-         Menu = menu(self)
-     def terminer_partie(self):
-        pass
+         self.menu = menu(self)
+
 
      def buttom_action(self,index):
          if index in self.relance_de:
@@ -115,7 +114,7 @@ class menu(Toplevel):
         self.check.grid(row=4,column=5)
         commencer_partie = Button(self,text="Commencer",command = self.nouvelle_parti).grid(row=4,column=2)
         regles = Button(self,text="Lire règles",command=self.lire_regles).grid(row=4,column=3)
-        quitter = Button(self,text="Quitter",command=self.quit).grid(row=5,column=3)
+        quitter = Button(self,text="Quitter",command=self.master.destroy).grid(row=5,column=3)
         restaurer = Button(self,text="Restaurer",command=self.charger_partie).grid(row=5,column=2)
 
     def nouvelle_parti(self):
@@ -126,6 +125,8 @@ class menu(Toplevel):
         # TODO: avant de fermer.
         list_joueur = []
         est_joker = self.joker_d_as.get()
+        for i in range(0, len(self.master.de_buttom)):
+            self.master.de_buttom[i].config(state="normal")
         self.master.list_obj_joueur = []
         if(self.nom_joueur3.get() == ""):
             self.master.frame_player3.destroy()
@@ -137,7 +138,7 @@ class menu(Toplevel):
             list_joueur.append(self.nom_joueur3.get())
 
         for i in list_joueur:
-            joueur = Joueur(i,self.master)
+            joueur = Joueur(i,self.master,est_joker)
             self.master.list_obj_joueur.append(joueur)
         self.master.partie = Partie(self.master.list_obj_joueur,self.master)
         self.grab_release()

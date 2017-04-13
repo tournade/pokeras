@@ -37,7 +37,10 @@ class Partie:
 
         self.interface.joueur_interface[index][0].config(text=joueur.nom)
         try:
-            result = str(joueur.combinaison.determiner_type_combinaison())
+            if joueur.est_joker == False:
+                result = str(joueur.combinaison.determiner_type_combinaison_sans_joker())
+            else:
+                result = str(joueur.combinaison.determiner_type_combinaison())
             cbn =""
             for i in joueur.combinaison.retourne_combinaison():
                 cbn += i + " "

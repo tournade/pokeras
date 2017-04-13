@@ -9,7 +9,7 @@ class Joueur:
         nb_victoires (int): Le nombre de parties remportées.
         nb_parties_jouees (int): Le nombre de parties jouées.
     """
-    def __init__(self, nom,interface):
+    def __init__(self, nom,interface,est_joker):
         """
         Initialise un nouveau joueur avec son nom.
 
@@ -22,6 +22,7 @@ class Joueur:
         self.restore = False
         self.termine = False
         self.interface =interface
+        self.est_joker = est_joker
 
     def jouer_tour(self, limite_lancers):
         """

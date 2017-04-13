@@ -51,57 +51,38 @@ class Combinaison:
 
             self.nb_lancers += 1
     def determiner_type_combinaison_sans_joker(self):
-        elements_similaire = []
-        caract1= ''
-        caract2=''
-        caract3=''
-        caract4=''
-        caract5=''
-        for i in range(len(self.des)):
-            if (self.des[i]!=self.des[i-1]):
-                elements_similaire += self.des[i]
-        if (len(elements_similaire)==1):
-            caract1 = elements_similaire[0]
-        elif(len(elements_similaire)==2):
-            caract1 = elements_similaire[0]
-            caract2 = elements_similaire[1]
-        elif(len(elements_similaire)==3):
-            caract1 = elements_similaire[0]
-            caract2 = elements_similaire[1]
-            caract3 = elements_similaire[2]
-        elif(len(elements_similaire)==4):
-            caract1 = elements_similaire[0]
-            caract2 = elements_similaire[1]
-            caract3 = elements_similaire[2]
-            caract4 = elements_similaire[3]
-        else:
-            caract1 = elements_similaire[0]
-            caract2 = elements_similaire[1]
-            caract3 = elements_similaire[2]
-            caract4 = elements_similaire[3]
-            caract5 = elements_similaire[4]
-        if (self.des.count(caract1)==5):
-            return TypeCombinaison.QUINTON
-        elif (self.des.count(caract1) == 4 or self.des.count(caract2) == 4):
-            return TypeCombinaison.CARRE
-        elif(self.des==[caract1,caract1,caract1,caract2,caract2]):
-            return TypeCombinaison.FULL
-        elif(self.des==[caract2,caract2,caract2,caract1,caract1]):
-            return TypeCombinaison.FULL
-        elif(self.des.count(caract1) ==3 or self.des.count(caract2) ==3 or self.des.count(caract3)==3):
-            return TypeCombinaison.BRELAN
-        elif(self.des.count(caract1)==2 and self.des.count(caract2)==2):
-            return TypeCombinaison.DEUX_PAIRES
-        elif(self.des.count(caract1)==2 and self.des.count(caract3)==2):
-            return TypeCombinaison.DEUX_PAIRES
-        elif(self.des.count(caract2)==2 and self.des.count(caract3)==2):
-            return TypeCombinaison.DEUX_PAIRES
-        elif(self.des.count(caract1)==2 or self.des.count(caract2)==2 or self.des.count(caract3)==2):
-            return TypeCombinaison.UNE_PAIRE
-        elif (self.des==[caract1,caract2,caract3,caract4,caract5]):
+        valeurs = []
+        for elem in self.des:
+            valeurs.append(elem.value)
+        valeurs.sort()
+
+        nb_identiques = []
+        precedent = -1
+        for elem in valeurs:
+            if elem == precedent:
+                nb_identiques[-1] += 1
+            else:
+                nb_identiques.append(1)
+                precedent = elem
+
+
+        nb_identiques.sort(reverse=True)
+        if(Carte.AS in self.des and Carte.ROI in self.des and Carte.DAME in self.des and Carte.VALET in self.des and Carte.DIX in self.des) or (Carte.NEUF in self.des and Carte.ROI in self.des and Carte.DAME in self.des and Carte.VALET in self.des and Carte.DIX in self.des):
             return TypeCombinaison.SEQUENCE
-        else:
-            return TypeCombinaison.AUTRE
+        if nb_identiques[0] == 5:
+            return TypeCombinaison.QUINTON
+        if nb_identiques[0] == 4:
+            return TypeCombinaison.CARRE
+        if nb_identiques[0] == 3 and nb_identiques[1] == 2:
+            return TypeCombinaison.FULL
+        if nb_identiques[0] == 3:
+            return TypeCombinaison.BRELAN
+        if nb_identiques[0] == 2 and nb_identiques[1] == 2:
+            return TypeCombinaison.DEUX_PAIRES
+        if nb_identiques[0] == 2:
+            return TypeCombinaison.UNE_PAIRE
+
+        return TypeCombinaison.AUTRE
 
     def determiner_type_combinaison(self):
         """Détermine le type de la combinaison.
@@ -168,7 +149,7 @@ class Combinaison:
         egalite = False
 
         for joueur, combinaison in combinaisons:
-            if (combinaison.est_joker==False):
+            if joueur.est_joker == False:
                 type = combinaison.determiner_type_combinaison_sans_joker()
             else:
                 type = combinaison.determiner_type_combinaison()
@@ -234,10 +215,6 @@ if __name__ == "__main__":
     assert "Dés:     1  2  3  4  5" in str(combinaison)
     assert "Valeur:  A  R  D  V  X" in str(combinaison)
     #test de type de fonction determiner_combinaison sans joker
-    combinaison.des=['A','A','A','X','X']
-    assert combinaison.determiner_type_combinaison_sans_joker() == TypeCombinaison.FULL
-    combinaison.des = ['X','X','9','R','R']
-    assert combinaison.determiner_type_combinaison_sans_joker() == TypeCombinaison.DEUX_PAIRES
     combinaisons = [
              # Combinaisons avec As
             ([Carte.AS, Carte.AS, Carte.AS, Carte.AS, Carte.AS],
