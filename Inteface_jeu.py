@@ -1,8 +1,8 @@
 from tkinter import Tk, Label, Button, BooleanVar, Checkbutton, Entry, messagebox, Toplevel, LabelFrame, Frame, GROOVE, \
-    IntVar
+    IntVar, Message
 from joueur import Joueur
 from partie import Partie
-from combinaison import Combinaison
+
 
 nom1 =''
 nom2 =''
@@ -84,8 +84,8 @@ class mon_interface(Tk):
 
      def buttom_action(self,index):
          if index in self.relance_de:
-            print(index)
-            print(self.partie.joueur_actif.combinaison.des[index])
+            #print(index)
+            #print(self.partie.joueur_actif.combinaison.des[index])
             self.de_buttom[index].config(text=self.partie.joueur_actif.combinaison.des[index])
             self.relance_de.remove(index)
          else:
@@ -123,35 +123,39 @@ class menu(Toplevel):
         # TODO: Lorsque nous connaîtrons la gestion des erreurs,
         # TODO: nous pourrions valider le contenu de l'entrée
         # TODO: avant de fermer.
-        list_joueur = []
-        est_joker = self.joker_d_as.get()
-        for i in range(0, len(self.master.de_buttom)):
-            self.master.de_buttom[i].config(state="normal")
-        self.master.list_obj_joueur = []
-        if(self.nom_joueur3.get() == ""):
-            self.master.frame_player3.destroy()
-            list_joueur.append(self.nom_joueur1.get())
-            list_joueur.append(self.nom_joueur2.get())
+        if self.nom_joueur1 == "" or self.nom_joueur2.get() == "":
+            w = Message(self, text="SVP veuillez ajouter les nom des joueur", width=300)
+            w.grid(row=6, column=1, columnspan=6)
         else:
-            list_joueur.append(self.nom_joueur1.get())
-            list_joueur.append(self.nom_joueur2.get())
-            list_joueur.append(self.nom_joueur3.get())
+            list_joueur = []
+            est_joker = self.joker_d_as.get()
+            for i in range(0, len(self.master.de_buttom)):
+                self.master.de_buttom[i].config(state="normal")
+            self.master.list_obj_joueur = []
+            if(self.nom_joueur3.get() == ""):
+                self.master.frame_player3.destroy()
+                list_joueur.append(self.nom_joueur1.get())
+                list_joueur.append(self.nom_joueur2.get())
+            else:
+                list_joueur.append(self.nom_joueur1.get())
+                list_joueur.append(self.nom_joueur2.get())
+                list_joueur.append(self.nom_joueur3.get())
 
-        for i in list_joueur:
-            joueur = Joueur(i,self.master,est_joker)
-            self.master.list_obj_joueur.append(joueur)
-        self.master.partie = Partie(self.master.list_obj_joueur,self.master)
-        self.grab_release()
-        self.master.focus_set()
-        self.destroy()
+            for i in list_joueur:
+                joueur = Joueur(i,self.master,est_joker)
+                self.master.list_obj_joueur.append(joueur)
+            self.master.partie = Partie(self.master.list_obj_joueur,self.master)
+            self.grab_release()
+            self.master.focus_set()
+            self.destroy()
 
-        self.master.blancer.config(state="normal")
-        self.master.tour.config(state="disabled")
-        self.master.partie.jouer_partie()
-        self.master.tour.config(state="normal")
-        self.master.blancer.config(state="disable")
-        for i in self.master.de_buttom:
-            i.config(state="disabled")
+            self.master.blancer.config(state="normal")
+            self.master.tour.config(state="disabled")
+            self.master.partie.jouer_partie()
+            self.master.tour.config(state="normal")
+            self.master.blancer.config(state="disable")
+            for i in self.master.de_buttom:
+                i.config(state="disabled")
         # On sauvegarde le résultat.
 
         # On redonne le contrôle au parent.
