@@ -14,6 +14,7 @@ class mon_interface(Tk):
          self.wait = BooleanVar()
          self.wait.set(False)
          self.relance_de = []
+         self.title("Poker AS")
          self.frame_player1 = LabelFrame(self, text="Player 1", padx=20, pady=20)
          self.frame_player1.grid(row=1, column=1)
          self.player1 = Label(self.frame_player1,
@@ -100,6 +101,7 @@ class menu(Toplevel):
         self.master = master
         self.transient(master)
         self.grab_set()
+        self.title("Veuillez indiquez les nom des joueur pour le poker as")
         self.nom_joueur1 = Entry(self)
         self.nom_joueur1.grid(row=2,column=3)
         joueur1= Label(self,text="Joueur 1").grid(row=1,column=3)
@@ -124,7 +126,7 @@ class menu(Toplevel):
         # TODO: nous pourrions valider le contenu de l'entrée
         # TODO: avant de fermer.
         if self.nom_joueur1 == "" or self.nom_joueur2.get() == "":
-            w = Message(self, text="SVP veuillez ajouter les nom des joueur", width=300)
+            w = Message(self, text="SVP veuillez ajouter le nom des joueur 1 et 2", width=300)
             w.grid(row=6, column=1, columnspan=6)
         else:
             list_joueur = []

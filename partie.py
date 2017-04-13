@@ -123,6 +123,7 @@ class Partie:
             save["joueur"][joueur.nom]['emplacement'] = etat
             save["joueur"][joueur.nom]["parti_jouer"] = joueur.nb_parties_jouees
             save["joueur"][joueur.nom]["nombre_victoire"] = joueur.nb_victoires
+            save["joueur"][joueur.nom]["est_joker"] = joueur.est_joker
             try:
                 save["joueur"][joueur.nom]["combinaison"] = str(joueur.combinaison.des)
                 save["joueur"][joueur.nom]["fin_tour"] = joueur.termine
@@ -146,10 +147,12 @@ class Partie:
             joueurs_restaure.append(joueur)
 
         for joueur in cfg['joueur']:
-            joueurs_restaure[cfg['joueur'][joueur]['emplacement']] = Joueur(joueur,self.interface)
+
+            joueurs_restaure[cfg['joueur'][joueur]['emplacement']] = Joueur(joueur,self.interface,cfg['joueur'][joueur]['est_joker'])
             joueurs_restaure[cfg['joueur'][joueur]['emplacement']].nb_parties_jouees = cfg['joueur'][joueur]['parti_jouer']
             joueurs_restaure[cfg['joueur'][joueur]['emplacement']].nb_victoires = cfg['joueur'][joueur]['nombre_victoire']
             joueurs_restaure[cfg['joueur'][joueur]['emplacement']].termine = cfg['joueur'][joueur]['fin_tour']
+
             try:
                 joueurs_restaure[cfg['joueur'][joueur]['emplacement']].restaure_combinaison(cfg['joueur'][joueur]['combinaison'])
                 joueurs_restaure[cfg['joueur'][joueur]['emplacement']].combinaison.nb_lancers = cfg['joueur'][joueur]['nombre de lancer']
