@@ -34,7 +34,12 @@ class Partie:
                 pass
 
     def update_interface_joueur(self,index,joueur):
-
+        """
+        met à jour l'interface du joueur
+        :param index:
+        :param joueur:
+        :return:
+        """
         self.interface.joueur_interface[index][0].config(text=joueur.nom)
         try:
             if joueur.est_joker == False:

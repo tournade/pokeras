@@ -22,17 +22,20 @@ class Combinaison:
         else:
             self.des = des
 
-            if type(self.des[0]) == int:
+            if (type(self.des[0]) == int):
                 self.des = []
                 for i in des:
                     self.des.append(self.types_cartes[i])
-
 
     def ajouter_des_a_index(self,numero,index_a_relancer):
        index_a_relancer.append(numero)
        return index_a_relancer
 
     def retourne_combinaison(self):
+        """
+        Converti les éléments de la liste des et chaînes de caractères
+        :return: une combinaison d'éléments
+        """
         chaine = []
         for elem in self.des:
             chaine.append(str(elem))
@@ -51,6 +54,10 @@ class Combinaison:
 
             self.nb_lancers += 1
     def determiner_type_combinaison_sans_joker(self):
+        """
+        Détermine le type de la combinaison des en desactivant le paramètre as est joker
+        :return: le type de la combianison des
+        """
         valeurs = []
         for elem in self.des:
             valeurs.append(elem.value)
@@ -81,8 +88,8 @@ class Combinaison:
             return TypeCombinaison.DEUX_PAIRES
         if nb_identiques[0] == 2:
             return TypeCombinaison.UNE_PAIRE
-
-        return TypeCombinaison.AUTRE
+        else:
+            return TypeCombinaison.AUTRE
 
     def determiner_type_combinaison(self):
         """Détermine le type de la combinaison.
