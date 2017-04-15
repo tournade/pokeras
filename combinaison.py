@@ -13,18 +13,19 @@ class Combinaison:
         Carte.AS, Carte.ROI, Carte.DAME, Carte.VALET, Carte.DIX, Carte.NEUF
     ]
     index_a_relancer = []
-    def __init__(self, des = None,est_joker=True):
+    def __init__(self, des=None,est_joker=False):
         """Initialise une combinaison"""
         self.nb_lancers = 1
         self.est_joker = est_joker
+        des = None
         if des is None:
             self.des = self._lancer_des(5)
         else:
             self.des = des
-
-            if (type(self.des[0]) == int):
+            if (type(self.des) != list):
                 self.des = []
-                for i in des:
+                self.des = list(self.des)
+                for i in range(len(des)):
                     self.des.append(self.types_cartes[i])
 
     def ajouter_des_a_index(self,numero,index_a_relancer):
@@ -137,7 +138,6 @@ class Combinaison:
             return TypeCombinaison.DEUX_PAIRES
         if nb_identiques[0] + nb_as == 2:
             return TypeCombinaison.UNE_PAIRE
-
         return TypeCombinaison.AUTRE
 
     @staticmethod
