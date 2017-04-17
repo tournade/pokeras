@@ -1,3 +1,4 @@
+import os
 from tkinter import Tk, Label, Button, BooleanVar, Checkbutton, Entry, messagebox, Toplevel, LabelFrame, Frame, GROOVE, \
     IntVar, Message
 from joueur import Joueur
@@ -138,8 +139,10 @@ class menu(Toplevel):
         commencer_partie = Button(self,text="Commencer",command = self.nouvelle_parti).grid(row=4,column=2)
         regles = Button(self,text="Lire règles",command=self.lire_regles).grid(row=4,column=3)
         quitter = Button(self,text="Quitter",command=self.master.destroy).grid(row=5,column=3)
-        restaurer = Button(self,text="Restaurer",command=self.charger_partie).grid(row=5,column=2)
-
+        if  os.path.isfile("save.yml"):
+            restaurer = Button(self, text="Restaurer", command=self.charger_partie,state="normal").grid(row=5, column=2)
+        else:
+            restaurer = Button(self, text="Restaurer", command=self.charger_partie,state="disabled").grid(row=5, column=2)
     def nouvelle_parti(self):
         """Affecte l'attribut "valeur" à la valeur choisie, et fermer la fenêtre.
         """
@@ -176,7 +179,7 @@ class menu(Toplevel):
             self.master.tour.config(state="disabled")
             self.master.partie.jouer_partie()
             self.master.tour.config(state="normal")
-            self.master.blancer.config(state="disable")
+            self.master.blancer.config(state="disabled")
             for i in self.master.de_buttom:
                 i.config(state="disabled")
         # On sauvegarde le résultat.

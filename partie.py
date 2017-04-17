@@ -53,7 +53,11 @@ class Partie:
             cbn =""
             for i in joueur.combinaison.retourne_combinaison():
                 cbn += i + " "
-            label = "combinaison: " + cbn + "\nresultat: " + result + "\nnombre de parti gagnee: " + str(joueur.nb_victoires)  +"\nparti jouer: " + str(joueur.nb_parties_jouees)
+                try:
+                    pourcent = joueur.nb_victoires * 100 / joueur.nb_parties_jouees
+                    label = "combinaison: " + cbn + "\nresultat: " + result + "\nnombre de parti gagnee: " + str(joueur.nb_victoires)  +"\nparti jouer: " + str(joueur.nb_parties_jouees)+"\npourcentage: " + str(round(pourcent,2)) + " %"
+                except:
+                    label = "combinaison: " + cbn + "\nresultat: " + result + "\nnombre de parti gagnee: " + str(joueur.nb_victoires) + "\nparti jouer: " + str(joueur.nb_parties_jouees)
         except AttributeError or IndexError:
             label = "combinaison: \nresultat: \nnombre de parti gagnee: " + str(joueur.nb_victoires)  +"\nparti jouer: " + str(joueur.nb_parties_jouees)
 
