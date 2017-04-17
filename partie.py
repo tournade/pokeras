@@ -26,6 +26,10 @@ class Partie:
         self.restore = False
 
     def restaure_partie(self):
+        """
+        Permet de restaurer une partie qui été déjà éxécuté
+        :return: aucun paramètre
+        """
         for i in range(0, len(self.ordre)):
             index = self.ordre[i]
             joueur = self.joueurs[index]
@@ -36,9 +40,9 @@ class Partie:
     def update_interface_joueur(self,index,joueur):
         """
         met à jour l'interface du joueur
-        :param index:
-        :param joueur:
-        :return:
+        :param index: la position dans le tableau
+        :param joueur: le joueur à qui est son tour est
+        :return: aucun paramètre retourner
         """
         self.interface.joueur_interface[index][0].config(text=joueur.nom)
         try:
@@ -120,6 +124,10 @@ class Partie:
         return ordre
 
     def sauvegarde(self):
+        """
+        Sauvegarde les paramètres de la partie sous un fichier yml.
+        :return: aucun paramètre
+        """
         save = {}
         etat =0
         save["joueur"] = {}
@@ -145,6 +153,10 @@ class Partie:
         #print(yaml.dump(save, default_flow_style=False ))
 
     def restaure(self):
+        """
+        restaure le fichier yml de partie et charge les paramètres dans la partie.
+        :return: aucun paramètre
+        """
         with open("save.yml", 'r') as ymlfile:
             cfg = yaml.load(ymlfile)
         joueurs_restaure = []

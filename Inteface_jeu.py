@@ -63,6 +63,10 @@ class mon_interface(Tk):
 
          self.menu = menu(self)
      def next_game(self):
+         """
+        permet de continuer une partie qui est terminé sans la redémarrer
+         :return: aucun paramètre
+         """
          self.partie = Partie(self.list_obj_joueur, self)
          for i in  self.de_buttom:
              i.config(state="normal")
@@ -74,16 +78,33 @@ class mon_interface(Tk):
          for i in  self.de_buttom:
              i.config(state="disabled")
      def fonction_sauvegarde(self):
+         """
+        Permet au bouton sauvegarder d'accéder à la méthode de sauvegarde
+        :return: aucun paramètre
+        """
          self.partie.sauvegarde()
      def relance(self):
+         """
+        Permet au joueur de relancer les dés choisis par le joueur, afin de changer son type de combinaison
+        :return: aucun paramètre
+        """
          self.wait.set(False)
 
          self.update()
      def nouvelle_partie(self):
+         """
+        Permet de changer les paramètres de la nouvelle partie et de la commencer ou terminer.
+         :return: aucun paramètre
+        """
          self.menu = menu(self)
 
 
      def buttom_action(self,index):
+         """
+         Permet d'afficher et de sélectionner les dés à partir dés sélectionnés
+         :param index: le position du clé activé
+         :return: aucun paramètre
+         """
          if index in self.relance_de:
             #print(index)
             #print(self.partie.joueur_actif.combinaison.des[index])
@@ -163,6 +184,10 @@ class menu(Toplevel):
         # On redonne le contrôle au parent.
 
     def lire_regles(self):
+        """
+        Affiche une fenêtre avec les instructions du jeu.
+        :return:une fenêtre pop-up avec les règles du jeu.
+        """
         messagebox.showinfo("Règles du jeu","Le but du jeu est d'obtenir la combinaison ayant la plus grande valeur."
         "La combinaison valant le plus est le Quinton, soit lui avec 5 figures similaires, le carré avec 4 figures similaires."
         "Le full avec 3 figures similaires et suivis de 2 autre figures similaire,le brelan avec 3 figures similaires."
@@ -170,17 +195,21 @@ class menu(Toplevel):
         "et le carré avec une paire de figures. Chacun des joueurs à le droit 3 lancers sauf si le joueur précédent a"
         "a réussi en moins de coups, donc le nombre de coups réussis est le nouveau total")
     def charger_partie(self):
-            self.master.partie = Partie(interface=self.master, joueurs=[])
-            self.master.partie.restaure()
-            self.master.partie.restore = True
-            self.grab_release()
-            self.master.focus_set()
-            self.destroy()
-            self.master.blancer.config(state="normal")
-            self.master.tour.config(state="disabled")
-            self.master.partie.jouer_partie()
-            self.master.tour.config(state="normal")
-            self.master.blancer.config(state="disable")
+        """
+        Crée ou restaure une partie à partir de la fenêtre de départ, où les joueurs doivent inscrire leur paramètres.
+        :return:une fenêtre permettant au joueur de jouer la partie déjà commencer
+        """
+        self.master.partie = Partie(interface=self.master, joueurs=[])
+        self.master.partie.restaure()
+        self.master.partie.restore = True
+        self.grab_release()
+        self.master.focus_set()
+        self.destroy()
+        self.master.blancer.config(state="normal")
+        self.master.tour.config(state="disabled")
+        self.master.partie.jouer_partie()
+        self.master.tour.config(state="normal")
+        self.master.blancer.config(state="disable")
 
 if __name__ == '__main__':
     # Instanciation de la fenêtre et démarrage de sa boucle principale.

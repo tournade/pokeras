@@ -13,24 +13,30 @@ class Combinaison:
         Carte.AS, Carte.ROI, Carte.DAME, Carte.VALET, Carte.DIX, Carte.NEUF
     ]
     index_a_relancer = []
-    def __init__(self, des=None,est_joker=False):
+    def __init__(self, des = None,est_joker=True):
         """Initialise une combinaison"""
         self.nb_lancers = 1
         self.est_joker = est_joker
-        des = None
         if des is None:
             self.des = self._lancer_des(5)
         else:
             self.des = des
-            if (type(self.des) != list):
+
+            if type(self.des[0]) == int:
                 self.des = []
-                self.des = list(self.des)
-                for i in range(len(des)):
+                for i in des:
                     self.des.append(self.types_cartes[i])
 
+
     def ajouter_des_a_index(self,numero,index_a_relancer):
-       index_a_relancer.append(numero)
-       return index_a_relancer
+        """
+        Permet d'ajouter les dés sélectionés à l'index
+        :param numero: le numéro du dés sélectionés
+        :param index_a_relancer: la liste de dés
+        :return: l'index des dés à l'index à relancer
+        """
+        index_a_relancer.append(numero)
+        return index_a_relancer
 
     def retourne_combinaison(self):
         """
@@ -89,8 +95,8 @@ class Combinaison:
             return TypeCombinaison.DEUX_PAIRES
         if nb_identiques[0] == 2:
             return TypeCombinaison.UNE_PAIRE
-        else:
-            return TypeCombinaison.AUTRE
+
+        return TypeCombinaison.AUTRE
 
     def determiner_type_combinaison(self):
         """Détermine le type de la combinaison.
@@ -138,6 +144,7 @@ class Combinaison:
             return TypeCombinaison.DEUX_PAIRES
         if nb_identiques[0] + nb_as == 2:
             return TypeCombinaison.UNE_PAIRE
+
         return TypeCombinaison.AUTRE
 
     @staticmethod
