@@ -15,7 +15,7 @@ class mon_interface(Tk):
          self.wait = BooleanVar()
          self.wait.set(False)
          self.relance_de = []
-         self.title("Poker AS")
+         self.title("Poker d'As")
          self.frame_player1 = LabelFrame(self, text="Player 1", padx=20, pady=20)
          self.frame_player1.grid(row=1, column=1)
          self.player1 = Label(self.frame_player1,
@@ -40,7 +40,7 @@ class mon_interface(Tk):
 
          self.tour_a = Label(self,text="C'est au tour de ",justify="center")
          self.tour_a.grid(row=1, column=2, columnspan=5)
-         self.lance_a_faire = Label(self,text="tour numero: 0/0",justify="center")
+         self.lance_a_faire = Label(self,text="Tour: 0/0",justify="center")
          self.lance_a_faire.grid(row=1, column=7,columnspan=4)
          frame1 = Frame(self, borderwidth=2, relief=GROOVE).grid(row=2, column=2)
          self.de_1 = Button(frame1, text="0", width=3, height=2, command= lambda: self.buttom_action(0) ,padx=5, pady=5)
@@ -66,7 +66,7 @@ class mon_interface(Tk):
          self.menu = menu(self)
      def next_game(self):
          """
-        permet de continuer une partie qui est terminé sans la redémarrer
+        Permet de continuer une partie qui est terminée sans la redémarrer
          :return: aucun paramètre
          """
          self.partie = Partie(self.list_obj_joueur, self)
@@ -81,13 +81,13 @@ class mon_interface(Tk):
              i.config(state="disabled")
      def fonction_sauvegarde(self):
          """
-        Permet au bouton sauvegarder d'accéder à la méthode de sauvegarde
+        Permet au bouton Sauvegarder d'accéder à la méthode de sauvegarde
         :return: aucun paramètre
         """
          self.partie.sauvegarde()
      def relance(self):
          """
-        Permet au joueur de relancer les dés choisis par le joueur, afin de changer son type de combinaison
+        Permet au joueur de relancer les dés choisis par celui-ci, afin de changer son type de combinaison
         :return: aucun paramètre
         """
          self.wait.set(False)
@@ -103,8 +103,8 @@ class mon_interface(Tk):
 
      def buttom_action(self,index):
          """
-         Permet d'afficher et de sélectionner les dés à partir dés sélectionnés
-         :param index: le position du clé activé
+         Permet d'afficher et de sélectionner les dés à partir des dés sélectionnés
+         :param index: la position du bouton activé
          :return: aucun paramètre
          """
          if index in self.relance_de:
@@ -124,7 +124,7 @@ class menu(Toplevel):
         self.master = master
         self.transient(master)
         self.grab_set()
-        self.title("Veuillez indiquez les nom des joueur pour le poker as")
+        self.title("Veuillez indiquer les noms des joueurs pour le Poker d'As")
         self.nom_joueur1 = Entry(self)
         self.nom_joueur1.grid(row=2,column=3)
         joueur1= Label(self,text="Joueur 1").grid(row=1,column=3)
@@ -135,23 +135,20 @@ class menu(Toplevel):
         self.nom_joueur3.grid(row=2,column=5)
         joueur3= Label(self,text="Joueur 3").grid(row=1,column=5)
         self.joker_d_as = IntVar()
-        self.check = Checkbutton(self,text="As en tant que joker",variable = self.joker_d_as)
+        self.check = Checkbutton(self,text="As en tant que Joker",variable = self.joker_d_as)
         self.check.grid(row=4,column=5)
         commencer_partie = Button(self,text="Commencer",command = self.nouvelle_parti).grid(row=4,column=2)
-        regles = Button(self,text="Lire règles",command=self.lire_regles).grid(row=4,column=3)
+        regles = Button(self,text="Règles du jeu",command=self.lire_regles).grid(row=4,column=3)
         quitter = Button(self,text="Quitter",command=self.master.destroy).grid(row=5,column=3)
         if  os.path.isfile("save.yml"):
             restaurer = Button(self, text="Restaurer", command=self.charger_partie,state="normal").grid(row=5, column=2)
         else:
             restaurer = Button(self, text="Restaurer", command=self.charger_partie,state="disabled").grid(row=5, column=2)
     def nouvelle_parti(self):
-        """Affecte l'attribut "valeur" à la valeur choisie, et fermer la fenêtre.
+        """Fonction qui démarre la partie et ferme la fenêtre.
         """
-        # TODO: Lorsque nous connaîtrons la gestion des erreurs,
-        # TODO: nous pourrions valider le contenu de l'entrée
-        # TODO: avant de fermer.
         if self.nom_joueur1 == "" or self.nom_joueur2.get() == "":
-            w = Message(self, text="SVP veuillez ajouter le nom des joueur 1 et 2", width=300)
+            w = Message(self, text="SVP veuillez ajouter le nom des joueurs 1 et 2", width=300)
             w.grid(row=6, column=1, columnspan=6)
         else:
             list_joueur = []
@@ -193,15 +190,15 @@ class menu(Toplevel):
         :return:une fenêtre pop-up avec les règles du jeu.
         """
         messagebox.showinfo("Règles du jeu","Le but du jeu est d'obtenir la combinaison ayant la plus grande valeur.\n\n"
-        "La combinaison valant le plus est \nle Quinton, soit lui avec 5 figures similaires,\n le carré avec 4 figures similaires.\n"
-        "Le full avec 3 figures similaires et suivis de 2 autre figures similaire,\nle brelan avec 3 figures similaires.\n"
-        "La séquence avec toutes les figures suivis l'une de l'autre, \ndeux paires de figures\n "
-        "et une paire de figures.\n Chacun des joueurs à le droit 3 lancers sauf si le joueur premier "
-        "a réussi en moins de coups, donc le nombre de coups réussis est le nouveau total")
+        "La combinaison valant le plus est \nLe Quinton avec 5 figures similaires;\n Le carré avec 4 figures similaires;\n"
+        "Le full avec 3 figures similaires suivies de 2 autres figures similaires;\nLe brelan avec 3 figures similaires.\n"
+        "La séquence avec toutes des figures formante une suite consécutive; \nDeux paires de figures\n "
+        "Une paire de figures.\n Chacun des joueurs a droit à 3 lancés sauf si le premier joueur "
+        "a réussi à créer sa combinaison en moins de coups. Dans ce cas, le nombre de coups du premier joueur devient le nouveau critère pour le deuxième joueur.")
     def charger_partie(self):
         """
-        Crée ou restaure une partie à partir de la fenêtre de départ, où les joueurs doivent inscrire leur paramètres.
-        :return:une fenêtre permettant au joueur de jouer la partie déjà commencer
+        Crée ou restaure une partie à partir de la fenêtre de départ, là où les joueurs doivent inscrire leurs paramètres.
+        :return:une fenêtre permettant au joueur de restaurer la partie déjà commencée
         """
         self.master.partie = Partie(interface=self.master, joueurs=[])
         self.master.partie.restaure()
