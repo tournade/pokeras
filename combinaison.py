@@ -28,16 +28,6 @@ class Combinaison:
                     self.des.append(self.types_cartes[i])
 
 
-    def ajouter_des_a_index(self,numero,index_a_relancer):
-        """
-        Permet d'ajouter les dés sélectionnés à l'index
-        :param numero: le numéro du dé sélectionné
-        :param index_a_relancer: la liste de dés
-        :return: l'index des dés à l'index à relancer
-        """
-        index_a_relancer.append(numero)
-        return index_a_relancer
-
     def retourne_combinaison(self):
         """
         Convertit les éléments de la liste de dés en liste de chaînes de caractères
