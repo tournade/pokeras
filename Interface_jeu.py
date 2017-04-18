@@ -35,6 +35,7 @@ class mon_interface(Tk):
                                        justify="left")
          self.player3.grid()
 
+
          self.joueur_interface = [(self.frame_player1, self.player1), (self.frame_player2, self.player2),(self.frame_player3, self.player3)]
 
          self.tour_a = Label(self,text="C'est au tour de ",justify="center")
