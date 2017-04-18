@@ -27,7 +27,7 @@ class Partie:
 
     def restaure_partie(self):
         """
-        Permet de restaurer une partie qui été déjà éxécuté
+        Permet de restaurer une partie qui a déjà été exécutée
         :return: aucun paramètre
         """
         for i in range(0, len(self.ordre)):
@@ -41,8 +41,8 @@ class Partie:
         """
         met à jour l'interface du joueur
         :param index: la position dans le tableau
-        :param joueur: le joueur à qui est son tour est
-        :return: aucun paramètre retourner
+        :param joueur: le joueur actif
+        :return: aucun paramètre retourné
         """
         self.interface.joueur_interface[index][0].config(text=joueur.nom)
         try:
@@ -69,7 +69,7 @@ class Partie:
 
     def jouer_partie(self):
         """ Joue une partie entre tous les joueurs et détermine le gagnant.
-        Le compteur du nombre de partie est incrémenté pour chacun des joueurs.
+        Le compteur du nombre de parties est incrémenté pour chacun des joueurs.
         Le compteur de victoires est incrémenté pour le joueur gagnant (si la partie n'est pas nulle).
         Le joueur gagnant est affiché à l'écran (ou un message indiquant que la partie est nulle, s'il y a lieu).
         """
@@ -133,7 +133,7 @@ class Partie:
 
     def sauvegarde(self):
         """
-        Sauvegarde les paramètres de la partie sous un fichier yml.
+        Sauvegarde les paramètres de la partie sous un fichier yaml.
         :return: aucun paramètre
         """
         save = {}
@@ -162,7 +162,7 @@ class Partie:
 
     def restaure(self):
         """
-        restaure le fichier yml de partie et charge les paramètres dans la partie.
+        restaure le fichier yaml de parties et charge les paramètres dans la partie.
         :return: aucun paramètre
         """
         with open("save.yml", 'r') as ymlfile:
