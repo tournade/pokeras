@@ -1,0 +1,61 @@
+﻿
+numéro de l'équipe:
+
+Prénom et Nom 1 :Ian-Kyle Wagner
+Prénom et nom 2 : Pascal Johnson
+Numéro de dossier 1 (NI): 111157264
+Numéro de dossier 2 (NI): 111165993
+
+Temps de réalisation 1 : 12 heures
+Temps de réalisation 2 : 7 heures
+
+Selon vous, quel est le niveau de difficulté, entre 1 et 10, de ce TP (1= facile, 10= difficile): 5
+ 
+
+
+Fonctionnalités
+---------------
+
+/10 : Completure des interfaces par rapport aux requis.
+     Commentaires :
+
+
+/20 : Deroulement du jeu.
+     Commentaires :
+
+
+/20 : Interaction avec l'usager - messages.
+     Commentaires :
+
+
+/20 : exactitude des resultats.
+     Commentaires :
+
+
+/20 : Arret/reprise d'une partie.
+     Commentaires :
+
+
+
+/10 : Qualité du code.
+     Commentaires :
+
+
+
+Pénalités pour non-respect des consignes et/ou de retard
+--------------------------------------------------------
+
+
+
+
+
+Autres commentaires du correcteur
+---------------------------------
+
+
+
+initiales du correcteur:
+
+
+Total: /100
+
