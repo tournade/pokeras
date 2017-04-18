@@ -191,11 +191,11 @@ class menu(Toplevel):
         Affiche une fenêtre avec les instructions du jeu.
         :return:une fenêtre pop-up avec les règles du jeu.
         """
-        messagebox.showinfo("Règles du jeu","Le but du jeu est d'obtenir la combinaison ayant la plus grande valeur."
-        "La combinaison valant le plus est le Quinton, soit lui avec 5 figures similaires, le carré avec 4 figures similaires."
-        "Le full avec 3 figures similaires et suivis de 2 autre figures similaire,le brelan avec 3 figures similaires."
-        "La séquence avec toutes les figures suivis l'une de l'autre, le double carré avec deux paires de figures "
-        "et le carré avec une paire de figures. Chacun des joueurs à le droit 3 lancers sauf si le joueur précédent a"
+        messagebox.showinfo("Règles du jeu","Le but du jeu est d'obtenir la combinaison ayant la plus grande valeur.\n\n"
+        "La combinaison valant le plus est \nle Quinton, soit lui avec 5 figures similaires,\n le carré avec 4 figures similaires.\n"
+        "Le full avec 3 figures similaires et suivis de 2 autre figures similaire,\nle brelan avec 3 figures similaires.\n"
+        "La séquence avec toutes les figures suivis l'une de l'autre, \ndeux paires de figures\n "
+        "et une paire de figures.\n Chacun des joueurs à le droit 3 lancers sauf si le joueur premier "
         "a réussi en moins de coups, donc le nombre de coups réussis est le nouveau total")
     def charger_partie(self):
         """
