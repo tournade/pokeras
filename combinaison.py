@@ -30,8 +30,8 @@ class Combinaison:
 
     def ajouter_des_a_index(self,numero,index_a_relancer):
         """
-        Permet d'ajouter les dés sélectionés à l'index
-        :param numero: le numéro du dés sélectionés
+        Permet d'ajouter les dés sélectionnés à l'index
+        :param numero: le numéro du dé sélectionné
         :param index_a_relancer: la liste de dés
         :return: l'index des dés à l'index à relancer
         """
@@ -40,7 +40,7 @@ class Combinaison:
 
     def retourne_combinaison(self):
         """
-        Converti les éléments de la liste des et chaînes de caractères
+        Convertit les éléments de la liste de dés en liste de chaînes de caractères
         :return: une combinaison d'éléments
         """
         chaine = []
@@ -62,8 +62,8 @@ class Combinaison:
             self.nb_lancers += 1
     def determiner_type_combinaison_sans_joker(self):
         """
-        Détermine le type de la combinaison des en desactivant le paramètre as est joker
-        :return: le type de la combianison des
+        Détermine le type de la combinaison des dés en désactivant le paramètre As est un joker
+        :return: le type de la combianison de dés
         """
         valeurs = []
         for elem in self.des:
@@ -153,9 +153,9 @@ class Combinaison:
         Méthode statique qui détermine la meilleure combinaison (et donc le meilleur joueur) parmi une liste.
         Args:
             combinaisons (list): Liste de combinaisons sous forme de liste de tuples (Joueur, Combinaison)
-        Returns (tuple): Un tuple (Joueur, Combinaison) du meilleur joueur et de la meilleur combinaison ou (None, None)
+        Returns (tuple): Un tuple (Joueur, Combinaison) du meilleur joueur et de la meilleure combinaison ou (None, None)
                          en cas d'égalité. Il est à noter que le premier élément du tuple n'est pas nécessairement de
-                         type Joueur. Ce peut être un object quelconque (Joueur, entier, string, etc.), selon
+                         type Joueur. Ce peut être un objet quelconque (Joueur, entier, string, etc.), selon
                          l'utilisation souhaitée.
         """
         meilleur_valeur = -1
@@ -191,8 +191,8 @@ class Combinaison:
 
     def __str__(self):
         '''
-        a vous de voir comment definir et utiliser
-        :return: a definir selon vos besoins
+        À vous de voir comment définir et utiliser
+        :return: À définir selon vos besoins
         '''
         chaine = "Dés:    "
         for i in range(0, len(self.des)):
