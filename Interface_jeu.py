@@ -19,13 +19,13 @@ class mon_interface(Tk):
          self.frame_player1 = LabelFrame(self, text="Player 1", padx=20, pady=20)
          self.frame_player1.grid(row=1, column=1)
          self.player1 = Label(self.frame_player1,
-                                       text="combinaison:\nLancer_restant:\nresultat:\npourcentage de parti gagnee:\nparti jouer:",
+                                       text="Combinaison:\nLancés_restants:\nRésultat:\nPourcentage de parties gagnées:\nParties jouées:",
                                        justify="left")
          self.player1.grid()
          self.frame_player2 = LabelFrame(self, text="Player 2", padx=20, pady=20)
          self.frame_player2.grid(row=2, column=1)
          self.player2 = Label(self.frame_player2,
-                                       text="combinaison:\nLancer_restant:\nresultat:\npourcentage de parti gagnee:\nparti jouer:",
+                                       text="Combinaison:\nLancés_restants:\nRésultat:\nPourcentage de parties gagnées:\nParties jouées:",
                                        justify="left")
          self.player2.grid()
          self.frame_player3 = LabelFrame(self, text="Player 3", padx=20, pady=20)
