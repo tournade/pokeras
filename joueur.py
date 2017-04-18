@@ -28,7 +28,7 @@ class Joueur:
         """
         Joue le tour d'un joueur.
         Args:
-            limite_lancers (int): Le nombre de lancers maximums.
+            limite_lancers (int): Le nombre de lancés maximum.
 
         Returns (Combinaison): La combinaison obtenue
 
@@ -67,9 +67,9 @@ class Joueur:
 
     def restaure_combinaison(self, combinaison):
         """
-        Restaure la combinaision  du fichier yaml et la converti en format reconnu par le jeu.
+        Restaure la combinaison du fichier yaml et la convertit en format reconnu par le jeu.
         :param combinaison: la combinaison obtenue par le joueur
-        :return: la combinaison dans du joueur
+        :return: la combinaison de dés du joueur
         """
         enlever =['>','<','[',']',' ','Carte.','NEUF','DIX','VALET','DAME','ROI','AS',':']
         de = []
